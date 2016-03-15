@@ -6,6 +6,7 @@ public class Album {
 	
 	public static final int NAO_ENCONTRADO = -1;
 	
+	
 	private String titulo;
 	private int ano;
 	private String artista; //!!!!!!!!!!!!!!!!!SE DER TEMPO, PENSAR EM ENCAPSULAR ARTISTA(INTEGRANTES, INFO, ETC..)
