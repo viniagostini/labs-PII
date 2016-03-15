@@ -100,8 +100,11 @@ public class Album {
 			
 	}
 	
-	public Musica getFaixa(int indice){
+	public Musica getFaixa(int indice)throws Exception{
 		
+		if(indice < 1){
+			throw new Exception("Nao eh possivel ");
+		}
 		
 		
 		return null;
