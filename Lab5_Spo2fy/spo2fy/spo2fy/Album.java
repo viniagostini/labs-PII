@@ -19,6 +19,7 @@ public class Album {
 		}else{
 			this.titulo = titulo;
 			
+			
 		}
 		
 		if( ano < 1900 ){
