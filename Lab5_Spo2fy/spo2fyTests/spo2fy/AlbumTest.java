@@ -20,36 +20,46 @@ public class AlbumTest {
 			
 			
 		}catch(Exception e ){
-			fail("Não deveria lançar exceptions");
+			fail("Nao deveria lancar exceptions");
 		}
 	
 		
 		
 		//teste criando album de nome vazio
-				try{
-				
-				Album darkSideOfTheMoon = new Album("", 1973, "Pink Floyd");
-				
-				fail("Deveria ter lançado uma exception");
-				
-				}catch(Exception e){
-					assertEquals("Não é permitida a criação de musicas sem titulo.",
-							e.getMessage());
-				}
-				
-				// teste criando album de nome nulo
-				try{
-					
-					//Album darkSideOfTheMoon = new Album(null);
-					
-					fail("Deveria ter lançado uma exception");
-					
-					}catch(Exception e){
-						assertEquals("Não é permitida a criação de musicas sem titulo.",
-								e.getMessage());
-					}
+		try{
 		
+		Album darkSideOfTheMoon = new Album("", 1973, "Pink Floyd");
 		
+		fail("Deveria ter lancado uma exception");
+		
+		}catch(Exception e){
+			assertEquals("Nao eh permitida a criacao de musicas sem titulo.",
+					e.getMessage());
+		}
+		
+		// teste criando album de nome nulo
+		try{
+			
+			Album darkSideOfTheMoon = new Album(null, 2000, "W. Safadao");
+			
+			fail("Deveria ter lancado uma exception");
+			
+			}catch(Exception e){
+				assertEquals("Nao eh permitida a criacao de musicas sem titulo.",
+						e.getMessage());
+		}
+		
+		// teste criando album com data inferior a 1901
+		try{
+			
+			Album darkSideOfTheMoon = new Album("Dark Side of the moon", 1900, "Pink Floyd");
+			
+			fail("Deveria ter lancado uma exception");
+			
+			}catch(Exception e){
+				assertEquals("Nao eh permitida a criacao de albuns com data inferior a 1900.",
+						e.getMessage());
+		}
 		
 		
 		
@@ -73,7 +83,7 @@ public class AlbumTest {
 			resultado = darkSideOfTheMoon.adicionaFaixa(money);
 			assertTrue(resultado);
 			
-			// não é permitido inserir a mesma musica duas ou mais vezes
+			// nao eh permitido inserir a mesma musica duas ou mais vezes
 			resultado = darkSideOfTheMoon.adicionaFaixa(money);
 			assertFalse(resultado);
 			
@@ -99,7 +109,7 @@ public class AlbumTest {
 			
 		}catch(Exception e){
 			System.out.println(e);
-			fail("Não deveria lançar exceptions");
+			fail("Nao deveria lancar exceptions");
 		}
 		
 		// testes de falha
@@ -112,10 +122,10 @@ public class AlbumTest {
 			//tentando inserir uma musica nula 
 			darkSideOfTheMoon.adicionaFaixa(null);
 			
-			fail("Deveria ter lançado uma exception");
+			fail("Deveria ter lancado uma exception");
 			
 		}catch(Exception e){
-			assertEquals("Não é possivel adicionar faixas vazias", e.getMessage());
+			assertEquals("Nao eh possivel adicionar faixas vazias", e.getMessage());
 		}
 		
 		try{
@@ -125,7 +135,7 @@ public class AlbumTest {
 			// tentando inserir o titulo da musica nulo
 			darkSideOfTheMoon.adicionaFaixa(null, 0 ,"Rock");
 			
-			fail("Deveria ter lançado uma exception");
+			fail("Deveria ter lancado uma exception");
 			
 		}catch(Exception e){
 			assertEquals("Titulo da musica nao pode ser nulo ou vazio.", e.getMessage());
@@ -136,10 +146,10 @@ public class AlbumTest {
 			
 			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
 			
-			// tentando inserir musica com duração negativa
+			// tentando inserir musica com duracao negativa
 			darkSideOfTheMoon.adicionaFaixa("Time", -1 ,"Rock");
 			
-			fail("Deveria ter lançado uma exception");
+			fail("Deveria ter lancado uma exception");
 			
 		}catch(Exception e){
 			assertEquals("Duracao da musica nao pode ser negativa.", e.getMessage());
@@ -152,19 +162,90 @@ public class AlbumTest {
 			// tentando inserir um genero vazio
 			darkSideOfTheMoon.adicionaFaixa("Time", 100 ,"");
 			
-			fail("Deveria ter lançado uma exception");
+			fail("Deveria ter lancado uma exception");
 			
 		}catch(Exception e){
 			assertEquals("Genero da musica nao pode ser nulo ou vazio.", e.getMessage());
 		}
+	
 		
+		//inserindo musica nula
+		try{
+			
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			
+			// tentando inserir um genero vazio
+			darkSideOfTheMoon.adicionaFaixa(null);
+			
+			fail("Deveria ter lancado uma exception");
+			
+		}catch(Exception e){
+			assertEquals("Nao eh possivel adicionar faixas vazias", e.getMessage());
+		}
+
 	}
 	
 	
+
+	@Test
+	public void testRemoverMusica(){
+		
+		try{
+			
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			
+			boolean resultado = darkSideOfTheMoon.adicionaFaixa("Time", 300, "Rock");
+			assertTrue(resultado);
+			
+			Musica money = new Musica("Money", 200,"Rock");
+			
+			resultado = darkSideOfTheMoon.adicionaFaixa(money);
+			assertTrue(resultado);
+			
+			
+			resultado = darkSideOfTheMoon.removeFaixa("Time");
+			assertTrue(resultado);
+			
+			
+			//garantia que a faixa foi removida
+			
+			resultado = darkSideOfTheMoon.temFaixa("Time");
+			assertFalse(resultado);
+			
+			int duracao = darkSideOfTheMoon.getDuracaoTotal();
+			assertEquals(200, duracao);
+			
+			
+		}catch(Exception e){
+			System.out.println(e);
+			fail("Nao deveria lancar exceptions");
+		}
 	
+		
+		try{
+			
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			
+			boolean resultado = darkSideOfTheMoon.adicionaFaixa("Time", 300, "Rock");
+			assertTrue(resultado);
+			
+			Musica money = new Musica("Money", 200,"Rock");
+			
+			resultado = darkSideOfTheMoon.adicionaFaixa(money);
+			assertTrue(resultado);
+			
+			
+			resultado = darkSideOfTheMoon.removeFaixa("");
+			
+			fail("Deveria lancar exceptions");
+			
+			
+		}catch(Exception e){
+			assertEquals("Nao eh permitido pesquisar valores nulos", 
+							e.getMessage());
+		}
 	
-	
-	
+	}
 	
 	//!!!!!!!!!!!!!!!!SE DER TEMPO, COLOCAR ESSAS MENSAGENS DE EXCEPTION EM CONSTANTES
 	

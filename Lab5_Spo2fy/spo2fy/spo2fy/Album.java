@@ -15,21 +15,21 @@ public class Album {
 	public Album(String titulo, int ano, String artista)throws Exception{
 		
 		if( titulo == null || titulo.equals("") ){
-			throw new Exception("Não é permitida a criação de albuns sem titulo.");
+			throw new Exception("Nao eh permitida a criacao de musicas sem titulo.");
 		}else{
 			this.titulo = titulo;
 			
 			
 		}
 		
-		if( ano < 1900 ){
-			throw new Exception("Não é permitida a criação de albuns com data inferior a 1900.");
+		if( ano <= 1900 ){
+			throw new Exception("Nao eh permitida a criacao de albuns com data inferior a 1900.");
 		}else{
 			this.ano = ano;
 		}
 		
 		if( artista == null || artista.equals("") ){
-			throw new Exception("Não é permitida a criação de albuns sem artista.");
+			throw new Exception("Nao eh permitida a criacao de albuns sem artista.");
 		}else{
 			this.artista = artista;
 		}
@@ -40,7 +40,7 @@ public class Album {
 	
 	public boolean adicionaFaixa(String titulo, int duracao, String genero) throws Exception{
 		
-		// caso algum dos parametros sejam invalidos o construtor de Musica irá lançar a exception
+		// caso algum dos parametros sejam invalidos o construtor de Musica irï¿½ lanï¿½ar a exception
 		Musica novaMusica = new Musica(titulo, duracao, genero);
 		
 		return this.adicionaFaixa(novaMusica);
@@ -49,7 +49,7 @@ public class Album {
 	public boolean adicionaFaixa(Musica novaMusica) throws Exception{
 	
 		if(novaMusica == null){
-			throw new Exception("Não é possivel adicionar faixas vazias");
+			throw new Exception("Nao eh possivel adicionar faixas vazias");
 		}
 		
 		if(temFaixa(novaMusica)){
@@ -100,11 +100,18 @@ public class Album {
 			
 	}
 	
+	public Musica getFaixa(int indice){
+		
+		
+		
+		return null;
+	}
+	
 	
 	private int buscaFaixa(String titulo)throws Exception{
 		
 		if(titulo == null || titulo.equals("")){
-			throw new Exception("Não é permitido pesquisar valores nulos");
+			throw new Exception("Nao eh permitido pesquisar valores nulos");
 		}
 		
 		int len = this.getFaixas().size();
@@ -125,7 +132,7 @@ public class Album {
 	private int buscaFaixa(Musica musica) throws Exception{
 		
 		if(musica == null){
-			throw new Exception("Não é permitido pesquisar valores nulos");
+			throw new Exception("Nï¿½o ï¿½ permitido pesquisar valores nulos");
 		}
 		
 		int len = this.getFaixas().size();
@@ -150,19 +157,13 @@ public class Album {
 		return ano;
 	}
 
-
-	
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
 
-
-	
 	public String getArtista() {
 		return artista;
 	}
-
-
 	
 	public void setArtista(String artista) {
 		this.artista = artista;
@@ -198,7 +199,7 @@ public class Album {
 	}
 
 	
-	//não faz sentido permitir que qualquer classe externa a essa mude o array
+	//nao faz sentido permitir que qualquer classe externa a essa mude o array
 	/*
 	public void setFaixas(ArrayList<Musica> faixas) {
 		this.faixas = faixas;
