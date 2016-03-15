@@ -18,6 +18,7 @@ public class Album {
 			throw new Exception("Não é permitida a criação de albuns sem titulo.");
 		}else{
 			this.titulo = titulo;
+			
 		}
 		
 		if( ano < 1900 ){
