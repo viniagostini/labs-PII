@@ -9,7 +9,7 @@ public class Album {
 	
 	private String titulo;
 	private int ano;
-	private String artista; //!!!!!!!!!!!!!!!!!SE DER TEMPO, PENSAR EM ENCAPSULAR ARTISTA(INTEGRANTES, INFO, ETC..)
+	private String artista;
 	private ArrayList<Musica> faixas;
 	
 	public Album(String titulo, int ano, String artista)throws Exception{
@@ -103,13 +103,18 @@ public class Album {
 	public Musica getFaixa(int indice)throws Exception{
 		
 		if(indice < 1){
-			throw new Exception("Nao eh possivel ");
+			throw new Exception("Nao existem faixas com numero inferiror a 1.");
 		}
 		
+		int tamanhoAlbum = this.getFaixas().size();
 		
-		return null;
+		if(indice > tamanhoAlbum){
+			throw new Exception("Nao ha musica com esse indice no album.");
+		}
+		
+		// os indices do arrayList comecam em 0 e as faixas em 1, por isso o "indice - 1" 
+		return this.getFaixas().get(indice - 1);
 	}
-	
 	
 	private int buscaFaixa(String titulo)throws Exception{
 		
@@ -208,6 +213,5 @@ public class Album {
 		this.faixas = faixas;
 	}
 	*/
-	
 	
 }

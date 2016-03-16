@@ -61,11 +61,7 @@ public class AlbumTest {
 						e.getMessage());
 		}
 		
-		
-		
 	}
-	
-	
 	
 	@Test
 	public void testInserirMusica(){
@@ -185,8 +181,6 @@ public class AlbumTest {
 
 	}
 	
-	
-
 	@Test
 	public void testRemoverMusica(){
 		
@@ -247,7 +241,89 @@ public class AlbumTest {
 	
 	}
 	
-	//!!!!!!!!!!!!!!!!SE DER TEMPO, COLOCAR ESSAS MENSAGENS DE EXCEPTION EM CONSTANTES
+	@Test
+	public void testGetFaixa(){
+
+		try{
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			
+			Musica speakToMe = new Musica("Speak to me", 200, "Rock");
+			boolean resultado = darkSideOfTheMoon.adicionaFaixa(speakToMe);
+			assertTrue(resultado);
+			
+			Musica breathe = new Musica("Breathe", 600, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(breathe);
+			assertTrue(resultado);
+			
+			Musica onTheRun = new Musica("On the Run", 300, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(onTheRun);
+			assertTrue(resultado);			
+			
+			Musica time = new Musica("Time", 400, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(time);
+			assertTrue(resultado);
+			
+			// teste consultando faixas 
+			
+			Musica faixa1 = darkSideOfTheMoon.getFaixa(1);
+			Musica faixa2 = darkSideOfTheMoon.getFaixa(2);
+			Musica faixa3 = darkSideOfTheMoon.getFaixa(3);
+			Musica faixa4 = darkSideOfTheMoon.getFaixa(4);
+			
+			
+			assertEquals(faixa1, speakToMe);
+			assertEquals(faixa2, breathe);
+			assertEquals(faixa3, onTheRun);
+			assertEquals(faixa4, time);
+
+			
+		}catch(Exception e){
+			fail("Não deveria ter lancado exception");
+		}
+		
+		// testes de falha
+		
+		try{
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			
+			Musica speakToMe = new Musica("Speak to me", 200, "Rock");
+			boolean resultado = darkSideOfTheMoon.adicionaFaixa(speakToMe);
+			assertTrue(resultado);
+			
+			Musica breathe = new Musica("Breathe", 600, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(breathe);
+			assertTrue(resultado);
+			
+			Musica onTheRun = new Musica("On the Run", 300, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(onTheRun);
+			assertTrue(resultado);			
+			
+			Musica time = new Musica("Time", 400, "Rock");
+			resultado = darkSideOfTheMoon.adicionaFaixa(time);
+			assertTrue(resultado);
+		
+			//consulta um indice abaixo de 1
+			
+			try{
+				darkSideOfTheMoon.getFaixa(0);
+				fail("Deveria ter lancado uma exception");
+			}catch(Exception e){
+				assertEquals("Nao existem faixas com numero inferiror a 1.", e.getMessage());
+			}
+			
+			
+			//consulta um indice acima do numero de faixas
+			try{
+				darkSideOfTheMoon.getFaixa(5);
+				fail("Deveria ter lancado uma exception");
+			}catch(Exception e){
+				assertEquals("Nao ha musica com esse indice no album.", e.getMessage());
+			}
+			
+		}catch(Exception e){
+			fail("Nao deveria ter lancado exception");
+		}
+	}
 	
 	
 
