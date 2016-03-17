@@ -12,6 +12,7 @@ public class Album {
 	private String artista;
 	private ArrayList<Musica> faixas;
 	
+	//construtor completo
 	public Album(String titulo, int ano, String artista)throws Exception{
 		
 		if( titulo == null || titulo.equals("") ){
@@ -37,7 +38,7 @@ public class Album {
 		this.faixas = new ArrayList<Musica>();
 	}
 	
-	
+	//funcionalidades
 	public boolean adicionaFaixa(String titulo, int duracao, String genero) throws Exception{
 		
 		// caso algum dos parametros sejam invalidos o construtor de Musica ir� lan�ar a exception
@@ -158,9 +159,62 @@ public class Album {
 		
 	}
 
+	
+	//metodos triviais
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((artista == null) ? 0 : artista.hashCode());
+		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj instanceof Album){
+			
+			Album outroAlbum = (Album) obj;
+			String tituloOutroAlbum = outroAlbum.getTitulo();
+			String artistaOutroAlbum = outroAlbum.getArtista();
+			
+			
+			if(this.getTitulo().equals(tituloOutroAlbum) && 
+					this.getArtista().equals(artistaOutroAlbum)){
+				
+				return true;	
+			}
+		}
+		
+		return false;
+	}
+	
+	public String toString(){		
+		String quebraDeLinha = System.lineSeparator();
+		
+		String retorno = "";
+		
+		retorno += "Titulo: "+this.getTitulo(); 
+		retorno += "; Ano: " + this.getAno(); 
+		retorno += "; Artista: " + this.getArtista() + quebraDeLinha;
+		
+		retorno += quebraDeLinha;
+		
+		int i = 1;
+		for(Musica musicaAtual : this.getFaixas()){
+			retorno += "faixa "+i+": ";
+			retorno += musicaAtual.toString();
+			retorno += quebraDeLinha;
+			
+			i++;
+		}
+		
+		return retorno;
+	}
 
 	
-	
+	// getters e setters
 	public int getAno() {
 		return ano;
 	}
@@ -205,6 +259,10 @@ public class Album {
 	private ArrayList<Musica> getFaixas() {	
 		return this.faixas;
 	}
+
+
+	
+	
 
 	
 	//nao faz sentido permitir que qualquer classe externa a essa mude o array

@@ -41,8 +41,8 @@ public class Musica implements Comparable<Musica>{
 	public String toString(){
 		String retorno = "";
 		
-		retorno += "Faixa: " + this.getTitulo() + "  ";
-		retorno += "Duracao: " + this.getDuracao() + " minutos  ";
+		retorno += "Titulo: " + this.getTitulo() + ";  ";
+		retorno += "Duracao: " + this.getDuracao() + " minutos;  ";
 		retorno += "Genero: " + this.getGenero() + ".";
  		
 		return retorno;

@@ -30,6 +30,9 @@ public class AlbumTest {
 		
 		Album darkSideOfTheMoon = new Album("", 1973, "Pink Floyd");
 		
+		//soh pra sumir o triangulo chato amarelo
+		darkSideOfTheMoon.getAno();
+		
 		fail("Deveria ter lancado uma exception");
 		
 		}catch(Exception e){
@@ -42,6 +45,9 @@ public class AlbumTest {
 			
 			Album darkSideOfTheMoon = new Album(null, 2000, "W. Safadao");
 			
+			//soh pra sumir o triangulo chato amarelo
+			darkSideOfTheMoon.getAno();
+			
 			fail("Deveria ter lancado uma exception");
 			
 			}catch(Exception e){
@@ -53,6 +59,9 @@ public class AlbumTest {
 		try{
 			
 			Album darkSideOfTheMoon = new Album("Dark Side of the moon", 1900, "Pink Floyd");
+			
+			//soh pra sumir o triangulo chato amarelo
+			darkSideOfTheMoon.getAno();
 			
 			fail("Deveria ter lancado uma exception");
 			
@@ -325,6 +334,35 @@ public class AlbumTest {
 		}
 	}
 	
-	
+	@Test
+	public void testEquals(){
+		
+		try{
+			
+		Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+		Album darkSideOfTheMoon2 = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+		Album theWall = new Album("The Wall", 1979, "Pink Floyd");
+		Album ten = new Album("Ten", 1991, "Pearl Jam");
+		
+		boolean iguais = darkSideOfTheMoon.equals(darkSideOfTheMoon2);
+		assertTrue(iguais);
+		
+		iguais = darkSideOfTheMoon.equals(theWall);
+		assertFalse(iguais);
+		
+		iguais = darkSideOfTheMoon.equals(ten);
+		assertFalse(iguais);
+		
+		iguais = darkSideOfTheMoon.equals(null);
+		assertFalse(iguais);
+		
+		
+		}catch(Exception e){
+			fail("Nao deveria lancar exception");
+		}
+		
+		
+	}
 
+	
 }
