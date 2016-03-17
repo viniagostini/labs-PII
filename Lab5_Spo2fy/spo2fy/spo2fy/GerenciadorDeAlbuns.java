@@ -2,11 +2,23 @@ package spo2fy;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class GerenciadorDeAlbuns {
 
+	/*
+	 * implementar esquema para conseguir uma chave unica
+	 * 
+	 * professor sugeriu UUID
+	 * 
+	 * 
+	 * Atualmente chavesAlbunsFavoritos nao estao em chevaesAlbunsComuns, pensar 
+	 * se deveria ser assim...
+	 * 
+	 * */
+	
 	private HashSet<String> chavesAlbunsComuns;
-	private HashSet<String> chavesAlbunsFavoritos; 
+	private HashSet<String> chavesAlbunsFavoritos;
 	private HashMap< String, Album > albuns;
 	
 	public GerenciadorDeAlbuns(){
@@ -57,7 +69,6 @@ public class GerenciadorDeAlbuns {
 		}
 	}
 	
-	
 	public boolean temAlbum(String titulo)throws Exception{
 		
 		if(titulo == null || titulo.equals("")){
@@ -94,9 +105,55 @@ public class GerenciadorDeAlbuns {
 		
 		return null;
 	}
-
+	
+	public boolean removeAlbum(String titulo)throws Exception{
+		
+		if(temAlbum(titulo)){
+			
+			//remove do mapa
+			this.getAlbuns().remove(titulo);
+			
+			//remove do set de chaves, porem, ele pode estas dentre as chaves comuns ou favoritas
+			if(this.getChavesAlbunsComuns().contains(titulo)){
+				this.getChavesAlbunsComuns().remove(titulo);
+			}else{
+				this.getChavesAlbunsFavoritos().remove(titulo);
+			}	
+		}
+		return false;
+	}
 	
 	
+	public String toString(){
+		String quebraDeLinha = System.lineSeparator();
+		
+		String retorno = "";
+		
+		retorno += "Albuns: ";
+		
+		retorno += quebraDeLinha + quebraDeLinha;
+		
+		retorno += "   Albuns favoritos: " + quebraDeLinha;
+		
+		for(String chaveAtual : this.getChavesAlbunsFavoritos()){
+			Album albumAtual = this.getAlbuns().get(chaveAtual);
+			retorno += "      " + albumAtual.getTitulo() + quebraDeLinha;
+		}
+		
+		retorno += quebraDeLinha + quebraDeLinha;
+		
+		
+		retorno += "   Albuns comuns: " + quebraDeLinha;
+		
+		for(String chaveAtual : this.getChavesAlbunsComuns()){
+			Album albumAtual = this.getAlbuns().get(chaveAtual);
+			retorno += "      " + albumAtual.getTitulo() + quebraDeLinha;
+		}
+		
+		
+		
+		return retorno;
+	}
 	
 	
 	// getters e setters

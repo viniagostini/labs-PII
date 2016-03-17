@@ -287,7 +287,7 @@ public class AlbumTest {
 
 			
 		}catch(Exception e){
-			fail("Não deveria ter lancado exception");
+			fail("Nao deveria ter lancado exception");
 		}
 		
 		// testes de falha
