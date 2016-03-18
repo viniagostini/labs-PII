@@ -2,7 +2,7 @@ package spo2fy;
 
 import java.util.ArrayList;
 
-public class Album {
+public class Album implements Comparable<Album> {
 	
 	public static final int NAO_ENCONTRADO = -1;
 	
@@ -12,7 +12,7 @@ public class Album {
 	private String artista;
 	private ArrayList<Musica> faixas;
 	
-	//construtor completo
+	//construtor
 	public Album(String titulo, int ano, String artista)throws Exception{
 		
 		if( titulo == null || titulo.equals("") ){
@@ -203,7 +203,7 @@ public class Album {
 		
 		int i = 1;
 		for(Musica musicaAtual : this.getFaixas()){
-			retorno += "faixa "+i+": ";
+			retorno += "        faixa "+i+": ";
 			retorno += musicaAtual.toString();
 			retorno += quebraDeLinha;
 			
@@ -213,6 +213,19 @@ public class Album {
 		return retorno;
 	}
 
+	@Override
+	public int compareTo(Album outroAlbum) {
+		
+		int anoInterno = this.getAno();
+		int anoExterno = outroAlbum.getAno();
+		
+		// se a subtracao entre o ano da classe atual e a outra classe for positiva,
+		// significa que o maior ano é o da classe interna, se for negativa será o contrario,
+		// e se for 0, as duas sao iguais...
+
+		return anoInterno - anoExterno;	
+	}
+	
 	
 	// getters e setters
 	public int getAno() {
@@ -261,15 +274,10 @@ public class Album {
 	}
 
 
-	
-	
 
-	
 	//nao faz sentido permitir que qualquer classe externa a essa mude o array
-	/*
-	public void setFaixas(ArrayList<Musica> faixas) {
-		this.faixas = faixas;
-	}
-	*/
+	//public void setFaixas(ArrayList<Musica> faixas) {
+	
+	
 	
 }

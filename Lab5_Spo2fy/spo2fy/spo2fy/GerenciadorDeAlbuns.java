@@ -1,170 +1,285 @@
 package spo2fy;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
-import java.util.UUID;
+import java.util.TreeMap;
 
 public class GerenciadorDeAlbuns {
 
 	/*
-	 * implementar esquema para conseguir uma chave unica
 	 * 
-	 * professor sugeriu UUID
-	 * 
-	 * 
-	 * Atualmente chavesAlbunsFavoritos nao estao em chevaesAlbunsComuns, pensar 
-	 * se deveria ser assim...
+	 *   A escolha do TreeMap para armazenar os albuns se deu por conta
+	 *da eficiencia [ O( n log(n) ) ] e simplicidade na hora de pesquisar, pelo mesmo
+	 *ser iteravel e por manter os elementos ordenados (passo 5)
+	 *  
+	 *   Tomar como paramentro pra maioria das acoes o titulo e artista
+	 *do album eh fundamental, pois é isso que torna cada album unico,
+	 *de outra forma, as pesquisas seriam inconsistentes, por conta disso,
+	 *o Professor Neto deixou que eu fizesse dessa forma
 	 * 
 	 * */
 	
-	private HashSet<String> chavesAlbunsComuns;
 	private HashSet<String> chavesAlbunsFavoritos;
-	private HashMap< String, Album > albuns;
+	private TreeMap< String, Album > albuns;
 	
+	//construtor
 	public GerenciadorDeAlbuns(){
-		this.chavesAlbunsComuns = new HashSet<String>();
 		this.chavesAlbunsFavoritos = new HashSet<String>();
-		this.albuns = new HashMap< String, Album >();
-		
+		this.albuns = new TreeMap< String, Album >();
 	}
 	
-	
+	//funcinalidades
 	public boolean adicionaAlbum(Album novoAlbum)throws Exception{
 		
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		valida(novoAlbum);
+		
+		// essa condicao cuida para que nao sejam inseridos albuns iguais
 		if(temAlbum(novoAlbum)){
 			return false;
 		}
 		
-		String chave = novoAlbum.getTitulo();
-		this.getChavesAlbunsComuns().add(chave);
+		String novoTitulo = novoAlbum.getTitulo();
+		String novoArtista = novoAlbum.getArtista();
+		
+		String chave = this.geraChave(novoTitulo, novoArtista);
 		
 		this.getAlbuns().put(chave, novoAlbum);
 		
 		return true;
 	}
 
-	public boolean favoritaAlbum(String tituloAlbum)throws Exception{
-		
-		if(temAlbum(tituloAlbum)){
+	public boolean favoritaAlbum(String titulo, String artista)throws Exception{
 
-			this.getChavesAlbunsComuns().remove(tituloAlbum);
-			this.getChavesAlbunsFavoritos().add(tituloAlbum);
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
+		
+		if(temAlbum(titulo, artista)){
+			String chave = this.geraChave(titulo, artista);
+			return this.getChavesAlbunsFavoritos().add(chave);
 			
-			return true;
 		}else{
 			return false;
 		}
 	}
 	
-	public boolean desfavoritaAlbum(String tituloAlbum)throws Exception{
+	public boolean desfavoritaAlbum(String titulo, String artista)throws Exception{
 		
-		if(temAlbum(tituloAlbum)){
-
-			this.getChavesAlbunsComuns().add(tituloAlbum);
-			this.getChavesAlbunsFavoritos().remove(tituloAlbum);
-			
-			return true;
-		}else{
-			return false;
-		}
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
+		
+		String chave = this.geraChave(titulo, artista);
+		
+		return this.getChavesAlbunsFavoritos().remove(chave);
 	}
 	
-	public boolean temAlbum(String titulo)throws Exception{
+	public boolean ehFavorito(String titulo, String artista) throws Exception{
 		
-		if(titulo == null || titulo.equals("")){
-			throw new Exception("Nao eh possivel trabalhar com valores vazios ou null");
-		}
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
 		
-		if(this.getAlbuns().containsKey(titulo)){
-			return true;
-		}else{
-			return false;
-		}
-
+		String chave = this.geraChave(titulo, artista);
+		
+		return this.getChavesAlbunsFavoritos().contains(chave);
 	}
-
+	
+	public boolean temAlbum(String titulo, String artista)throws Exception{
+		
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
+		
+		String chave = this.geraChave(titulo, artista);
+		
+		return this.getAlbuns().containsKey(chave);
+	}
+	
 	public boolean temAlbum(Album album)throws Exception{
 		
-		if(album == null){
-			throw new Exception("Nao eh possivel trabalhar com valores vazios ou null");
-		}
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(album);
 		
-		if(this.getAlbuns().containsValue(album)){
-			return true;
-		}else{
-			return false;
-		}
+		return this.getAlbuns().containsValue(album);
 
 	}
-	
-	public Album pesquisaAlbum(String titulo)throws Exception{
+
+	public Album pesquisaAlbum(String titulo, String artista)throws Exception{
 		
-		if(temAlbum(titulo)){
-			return this.getAlbuns().get(titulo);
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
+		
+		if(temAlbum(titulo, artista)){
+			
+			String chave = this.geraChave(titulo, artista);
+			
+			return this.getAlbuns().get(chave);
 		}
 		
 		return null;
 	}
 	
-	public boolean removeAlbum(String titulo)throws Exception{
+	public boolean removeAlbum(String titulo, String artista)throws Exception{
 		
-		if(temAlbum(titulo)){
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		this.valida(titulo, artista);
+		
+		if(temAlbum(titulo, artista)){
+			
+			String chave = this.geraChave(titulo, artista);
 			
 			//remove do mapa
-			this.getAlbuns().remove(titulo);
+			this.getAlbuns().remove(chave);
 			
-			//remove do set de chaves, porem, ele pode estas dentre as chaves comuns ou favoritas
-			if(this.getChavesAlbunsComuns().contains(titulo)){
-				this.getChavesAlbunsComuns().remove(titulo);
-			}else{
-				this.getChavesAlbunsFavoritos().remove(titulo);
+			// caso ele seja favorito, ele eh removido tambem do Set de chave de favoritos
+			if(this.getChavesAlbunsFavoritos().contains(chave)){
+				
+				this.getChavesAlbunsFavoritos().remove(chave);
+			
 			}	
+			
+			return true;
 		}
+		
 		return false;
 	}
 	
+	public ArrayList<Album> pesquisaAlbunsPorTitulo(String titulo)throws Exception{
+		
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		valida(titulo);
+		
+		ArrayList<Album> arrayAlbuns = new ArrayList<Album>();
+		
+		for( String chave : this.getAlbuns().keySet() ){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			String tituloAtual = albumAtual.getTitulo();
+			
+			if(tituloAtual.equals(titulo)){
+				arrayAlbuns.add(albumAtual);
+			}
+
+		}
+		
+		return arrayAlbuns;
+	}
 	
+	public ArrayList<Album> pesquisaAlbunsPorArtista(String artista)throws Exception{
+		
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		valida(artista);
+		
+		ArrayList<Album> arrayAlbuns = new ArrayList<Album>();
+		
+		for( String chave : this.getAlbuns().keySet() ){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			String artistaAtual = albumAtual.getArtista();
+			
+			if(artistaAtual.equals(artista)){
+				arrayAlbuns.add(albumAtual);
+			}
+
+		}
+		
+		return arrayAlbuns;
+	}
+	
+	public ArrayList<Album> pesquisaAlbunsPorAno(int ano)throws Exception{
+		
+		//o valida vai lancar uma exception caso um desses parametros seja invalido
+		valida(ano);
+		
+		ArrayList<Album> arrayAlbuns = new ArrayList<Album>();
+		
+		for( String chave : this.getAlbuns().keySet() ){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			int anoAtual = albumAtual.getAno();
+			
+			if(anoAtual == ano){
+				arrayAlbuns.add(albumAtual);
+			}
+
+		}
+		
+		return arrayAlbuns;
+	}
+	
+	public ArrayList<Album> getAlbunsFavoritos(){
+		
+		ArrayList<Album> albunsFavoritos = new ArrayList<Album>(); 
+		
+		for(String chave : this.getChavesAlbunsFavoritos()){
+			Album albumAtual = this.getAlbuns().get(chave);
+			albunsFavoritos.add(albumAtual);
+		}
+		
+		return albunsFavoritos;
+	}
+	
+	
+	
+	
+	//metodos triviais
 	public String toString(){
 		String quebraDeLinha = System.lineSeparator();
 		
-		String retorno = "";
-		
-		retorno += "Albuns: ";
+		String retorno = "Albuns: ";
 		
 		retorno += quebraDeLinha + quebraDeLinha;
 		
-		retorno += "   Albuns favoritos: " + quebraDeLinha;
-		
-		for(String chaveAtual : this.getChavesAlbunsFavoritos()){
-			Album albumAtual = this.getAlbuns().get(chaveAtual);
-			retorno += "      " + albumAtual.getTitulo() + quebraDeLinha;
+		for( String chave : this.getAlbuns().keySet() ){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			retorno += "    ";
+			
+			if(this.getChavesAlbunsFavoritos().contains(chave)){
+				retorno += "(Favorito)";
+			}
+			
+			retorno += albumAtual.toString();
+			
+			retorno += quebraDeLinha;
 		}
-		
-		retorno += quebraDeLinha + quebraDeLinha;
-		
-		
-		retorno += "   Albuns comuns: " + quebraDeLinha;
-		
-		for(String chaveAtual : this.getChavesAlbunsComuns()){
-			Album albumAtual = this.getAlbuns().get(chaveAtual);
-			retorno += "      " + albumAtual.getTitulo() + quebraDeLinha;
-		}
-		
-		
 		
 		return retorno;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((albuns == null) ? 0 : albuns.hashCode());
+		result = prime * result + ((chavesAlbunsFavoritos == null) ? 0 : chavesAlbunsFavoritos.hashCode());
+		return result;
+	}
+	
+	//equals gerado pelo eclipse, tendo em vista que ele basicamente nao tera utilidade nesse projeto
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof GerenciadorDeAlbuns))
+			return false;
+		GerenciadorDeAlbuns other = (GerenciadorDeAlbuns) obj;
+		if (albuns == null) {
+			if (other.albuns != null)
+				return false;
+		} else if (!albuns.equals(other.albuns))
+			return false;
+		if (chavesAlbunsFavoritos == null) {
+			if (other.chavesAlbunsFavoritos != null)
+				return false;
+		} else if (!chavesAlbunsFavoritos.equals(other.chavesAlbunsFavoritos))
+			return false;
+		return true;
+	}
+	
 	
 	// getters e setters
-	public HashSet<String> getChavesAlbunsComuns() {
-		return chavesAlbunsComuns;
-	}
-
-	public void setChavesAlbunsComuns(HashSet<String> chavesAlbunsComuns) {
-		this.chavesAlbunsComuns = chavesAlbunsComuns;
-	}
-
 	public HashSet<String> getChavesAlbunsFavoritos() {
 		return chavesAlbunsFavoritos;
 	}
@@ -173,12 +288,64 @@ public class GerenciadorDeAlbuns {
 		this.chavesAlbunsFavoritos = chavesAlbunsFavoritos;
 	}
 
-	public HashMap<String, Album> getAlbuns() {
+	public TreeMap<String, Album> getAlbuns() {
 		return albuns;
 	}
 
-	public void setAlbuns(HashMap<String, Album> albuns) {
+	public void setAlbuns(TreeMap<String, Album> albuns) {
 		this.albuns = albuns;
 	}
 	
+	
+	
+	// metodos de funcionamento interno
+	private String geraChave(String titulo, String artista){
+		// a chave consiste em dois atributos que tornam um album unico: titulo e artista
+		// ela sempre sera do formato "titulo-artista"
+		
+		return titulo+"-"+artista;
+	}
+
+	private void valida(String titulo, String artista)throws Exception{
+		
+		if(titulo == null || titulo.trim().isEmpty()){
+			throw new Exception("Nao eh possivel trabalhar com valores de titulos vazios ou null.");
+		}
+		
+		if(artista == null || artista.equals("")){
+			throw new Exception("Nao eh possivel trabalhar com valores de artistas vazios ou null.");
+		}
+		
+	}
+	
+	private void valida(String str)throws Exception{
+		
+		if(str == null || str.trim().isEmpty()){
+			throw new Exception("Nao eh possivel trabalhar com valores vazios ou null.");
+		}
+	
+	}
+	
+	private void valida(Album album)throws Exception{
+		
+		if(album == null){
+			throw new Exception("Nao eh possivel trabalhar com valores de albuns vazios ou null.");
+		}
+	}
+	
+	private void valida(int ano)throws Exception{
+		
+		int dataAtual = Calendar.getInstance().get(Calendar.YEAR);
+	
+		if(ano < 1901){
+			throw new Exception("Nao eh possivel trabalhar com valores de anos abaixo de 1901.");
+		}else if(ano > dataAtual){
+			throw new Exception("Impossivel trabalhar com albuns do futuro.");
+		}
+		
+		
+	}
+
+	
+
 }
