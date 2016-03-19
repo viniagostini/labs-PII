@@ -272,7 +272,11 @@ public class Album implements Comparable<Album> {
 	private ArrayList<Musica> getFaixas() {	
 		return this.faixas;
 	}
-
+	
+	public ArrayList<Musica> getMusicas() {	
+		//retorna uma copia do ArrayList de faixas
+		return new ArrayList<Musica>(this.getFaixas());
+	}
 
 
 	//nao faz sentido permitir que qualquer classe externa a essa mude o array

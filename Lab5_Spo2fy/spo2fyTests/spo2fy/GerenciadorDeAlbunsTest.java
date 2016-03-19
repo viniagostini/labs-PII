@@ -124,7 +124,7 @@ public class GerenciadorDeAlbunsTest {
 			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
 			Album theWall = new Album("The Wall", 1979, "Pink Floyd");
 			
-			Album albumPesquisado = gerenciadorDeAlbuns2.pesquisaAlbum("Dark Side of the Moon", "Pink Floyd");
+			Album albumPesquisado = gerenciadorDeAlbuns2.buscaAlbum("Dark Side of the Moon", "Pink Floyd");
 			
 			assertEquals(darkSideOfTheMoon, albumPesquisado);
 			
