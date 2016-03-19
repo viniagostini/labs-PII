@@ -103,7 +103,7 @@ public class GerenciadorDeAlbuns {
 
 	}
 
-	public Album pesquisaAlbum(String titulo, String artista)throws Exception{
+	public Album buscaAlbum(String titulo, String artista)throws Exception{
 		
 		//o valida vai lancar uma exception caso um desses parametros seja invalido
 		this.valida(titulo, artista);
@@ -113,9 +113,9 @@ public class GerenciadorDeAlbuns {
 			String chave = this.geraChave(titulo, artista);
 			
 			return this.getAlbuns().get(chave);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
 		}
-		
-		return null;
 	}
 	
 	public boolean removeAlbum(String titulo, String artista)throws Exception{
@@ -143,7 +143,7 @@ public class GerenciadorDeAlbuns {
 		return false;
 	}
 	
-	public ArrayList<Album> pesquisaAlbunsPorTitulo(String titulo)throws Exception{
+	public ArrayList<Album> buscaAlbunsPorTitulo(String titulo)throws Exception{
 		
 		//o valida vai lancar uma exception caso um desses parametros seja invalido
 		valida(titulo);
@@ -164,7 +164,7 @@ public class GerenciadorDeAlbuns {
 		return arrayAlbuns;
 	}
 	
-	public ArrayList<Album> pesquisaAlbunsPorArtista(String artista)throws Exception{
+	public ArrayList<Album> buscaAlbunsPorArtista(String artista)throws Exception{
 		
 		//o valida vai lancar uma exception caso um desses parametros seja invalido
 		valida(artista);
@@ -185,7 +185,7 @@ public class GerenciadorDeAlbuns {
 		return arrayAlbuns;
 	}
 	
-	public ArrayList<Album> pesquisaAlbunsPorAno(int ano)throws Exception{
+	public ArrayList<Album> buscaAlbunsPorAno(int ano)throws Exception{
 		
 		//o valida vai lancar uma exception caso um desses parametros seja invalido
 		valida(ano);
@@ -218,8 +218,79 @@ public class GerenciadorDeAlbuns {
 		return albunsFavoritos;
 	}
 	
+	//funcionalidades de Album (delegacao)
+	public boolean adicionaFaixa(String tituloAlbum, String artistaAlbum, Musica novaMusica) throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.adicionaFaixa(novaMusica);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+		
+	}
 	
+	public boolean removeFaixa(String tituloAlbum, String artistaAlbum, String tituloFaixa)throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.removeFaixa(tituloFaixa);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+		
+	}
 	
+	public boolean temFaixa(String tituloAlbum, String artistaAlbum, Musica musica)throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.temFaixa(musica);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+		
+			
+	}
+	
+	public boolean temFaixa(String tituloAlbum, String artistaAlbum, String tituloFaixa)throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.temFaixa(tituloFaixa);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+			
+	}
+	
+	public Musica getFaixa(String tituloAlbum, String artistaAlbum, int indice)throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.getFaixa(indice);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+
+	}
+	
+
 	
 	//metodos triviais
 	public String toString(){
@@ -299,9 +370,11 @@ public class GerenciadorDeAlbuns {
 	
 	
 	// metodos de funcionamento interno
-	private String geraChave(String titulo, String artista){
+	private String geraChave(String titulo, String artista)throws Exception{
 		// a chave consiste em dois atributos que tornam um album unico: titulo e artista
 		// ela sempre sera do formato "titulo-artista"
+		
+		this.valida(titulo, artista);
 		
 		return titulo+"-"+artista;
 	}
