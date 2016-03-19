@@ -244,7 +244,19 @@ public class GerenciadorDeAlbuns {
 		}else{
 			throw new Exception("Album nao pertence ao Perfil especificado");
 		}
+	}
+	
+	public boolean removeFaixa(String tituloAlbum, String artistaAlbum, int faixa)throws Exception{
 		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.removeFaixa(faixa);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
 	}
 	
 	public boolean temFaixa(String tituloAlbum, String artistaAlbum, Musica musica)throws Exception{
@@ -290,7 +302,18 @@ public class GerenciadorDeAlbuns {
 
 	}
 	
-
+	public Musica getFaixa(String tituloAlbum, String artistaAlbum, String titulo)throws Exception{
+		
+		String chave = this.geraChave(tituloAlbum, artistaAlbum);
+		
+		if(temAlbum(tituloAlbum, artistaAlbum)){
+			Album albumAtual = this.getAlbuns().get(chave);
+			
+			return albumAtual.getFaixa(titulo);
+		}else{
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+	}
 	
 	//metodos triviais
 	public String toString(){

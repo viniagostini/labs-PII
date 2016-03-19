@@ -77,6 +77,22 @@ public class Album implements Comparable<Album> {
 		}
 	}
 	
+	public boolean removeFaixa(int faixa)throws Exception{
+		
+		Musica musica = this.getFaixa(faixa);
+		
+		return this.removeFaixa(musica);
+	}
+	
+	public boolean removeFaixa(Musica musica)throws Exception{
+		
+		if(musica == null){
+			throw new Exception("Impossivel remover uma musica nula");
+		}
+		
+		return this.getFaixas().remove(musica);
+	}
+	
 	public boolean temFaixa(Musica musica)throws Exception{
 		
 		int result = this.buscaFaixa(musica);
@@ -116,6 +132,21 @@ public class Album implements Comparable<Album> {
 		// os indices do arrayList comecam em 0 e as faixas em 1, por isso o "indice - 1" 
 		return this.getFaixas().get(indice - 1);
 	}
+	
+	public Musica getFaixa(String titulo)throws Exception{
+		
+		int result = this.buscaFaixa(titulo);
+		
+		if(result == NAO_ENCONTRADO){
+			throw new Exception("Nenhuma faixa com esse titulo pertence a esse album");
+			
+		}else{
+			int indice = result;
+
+			return this.getFaixas().get(indice);
+		}
+	}
+	
 	
 	private int buscaFaixa(String titulo)throws Exception{
 		
