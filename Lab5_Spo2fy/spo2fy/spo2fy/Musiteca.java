@@ -147,6 +147,10 @@ public class Musiteca {
 	}
 	
 	public boolean removeFaixa(String tituloAlbum, String artistaAlbum, String tituloFaixa)throws Exception{
+		/*
+		 * para toda musica removida dos albuns, deve ser tambem removida de todas as playlists
+		 * */
+		
 		
 		Musica musicaRemovida = this.getGerenciadorDeAlbuns().getFaixa(tituloAlbum, artistaAlbum, tituloFaixa);
 		

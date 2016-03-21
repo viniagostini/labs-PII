@@ -13,7 +13,6 @@ public class GerenciadorDePlaylists {
 	 * 
 	 * As playlists ficam sempre ordenadas por duracao
 	 * 
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!talvez a playlist nao tenha titulo como atributo (pensar nisso depois)
 	 * 
 	 * */
 	
