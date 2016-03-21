@@ -1,22 +1,22 @@
 package spo2fy;
 
-import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.TreeMap;
+import java.util.Collections;
 import java.util.TreeSet;
-
 import comparators.AnoAlbumComparator;
+import comparators.ArtistaAlbumComparator;
+import comparators.DuracaoAlbumComparator;
+import comparators.TituloAlbumComparator;
 
 
 public class GerenciadorDeAlbuns2 {
 
 	/*
 	 * 
-	 *   A escolha do TreeMap para armazenar os albuns se deu por conta
-	 *da eficiencia [ O( n log(n) ) ] e simplicidade na hora de pesquisar, pelo mesmo
-	 *ser iteravel e por manter os elementos ordenados (passo 5)
+	 *   A escolha do TreeSet para armazenar os albuns se deu por conta
+	 *da eficiencia [ O( log(n) ) ] para inserir elementos e por mante-los 
+	 *ordenados, alem do fato de ser iteravel 
 	 *  
 	 *   Tomar como paramentro pra maioria das acoes o titulo e artista
 	 *do album eh fundamental, pois é isso que torna cada album unico,
@@ -30,8 +30,8 @@ public class GerenciadorDeAlbuns2 {
 	
 	//construtor
 	public GerenciadorDeAlbuns2(){
-		this.albunsFavoritos = new TreeSet<Album>( new AnoAlbumComparator() );
-		this.albuns = new TreeSet< Album >( new AnoAlbumComparator() );
+		this.albunsFavoritos = new TreeSet<Album>();
+		this.albuns = new TreeSet< Album >();
 	}
 	
 	//funcinalidades
@@ -206,17 +206,39 @@ public class GerenciadorDeAlbuns2 {
 	}
 
 	
-	public void ordenaAlbunsPorAno(){
-		//implementar
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorAno(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns());	
+		
+		Collections.sort(listaAlbuns, new AnoAlbumComparator());
+		
+		return listaAlbuns;
 	}
 	
-	public void ordenaAlbunsPorTitulo(){
-		//implementar
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorTitulo(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns());	
+		
+		Collections.sort(listaAlbuns, new TituloAlbumComparator());
+		
+		return listaAlbuns;
 	}
 	
-	public void ordenaAlbunsPorArtista(){
-		//implementar
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorArtista(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns());	
+		
+		Collections.sort(listaAlbuns, new ArtistaAlbumComparator());
+		
+		return listaAlbuns;
 	}
+	
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorDuracao(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns());	
+		
+		Collections.sort(listaAlbuns, new DuracaoAlbumComparator());
+		
+		return listaAlbuns;
+	}
+	
+	
 	
 	//funcionalidades de Album (delegacao)
 	public boolean adicionaFaixa(String tituloAlbum, String artistaAlbum, Musica novaMusica) throws Exception{

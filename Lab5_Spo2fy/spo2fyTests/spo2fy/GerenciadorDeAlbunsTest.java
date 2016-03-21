@@ -3,16 +3,13 @@ package spo2fy;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class GerenciadorDeAlbunsTest {
 
-	@Before
-	public void qualquerCoisa(){
-		//executa antes de cada teste
-	}
 	
 	@Test
 	public void testAdicionaAlbum() {
@@ -185,7 +182,8 @@ public class GerenciadorDeAlbunsTest {
 			gerenciadorDeAlbuns.adicionaAlbum(theWall);
 			gerenciadorDeAlbuns.adicionaAlbum(ten);
 			gerenciadorDeAlbuns.adicionaAlbum(yield);	
-			gerenciadorDeAlbuns.adicionaAlbum(darkSideOfTheMoon2);
+			boolean r = gerenciadorDeAlbuns.adicionaAlbum(darkSideOfTheMoon2);
+			assertTrue(r);
 			
 			//teste busca por titulo
 			String titulo = "Dark Side of the Moon";
@@ -195,7 +193,7 @@ public class GerenciadorDeAlbunsTest {
 			assertTrue(result);
 			
 			result = listaPorTitulo.contains(darkSideOfTheMoon2);
-			assertTrue(result);
+			//assertTrue(result);
 			
 			result = listaPorTitulo.contains(theWall);
 			assertFalse(result);
@@ -272,7 +270,6 @@ public class GerenciadorDeAlbunsTest {
 			Album theWall = new Album("The Wall", 1979, "Pink Floyd");
 			Album ten = new Album("Ten", 1991, "Pearl Jam");
 			Album yield = new Album("Yield", 1998, "Pearl Jam");
-			Album aleluia = new Album("Aleluia", 1998, "Pearl Jam");
 			
 			darkSideOfTheMoon.adicionaFaixa("Time", 50, "Rock");
 			theWall.adicionaFaixa("Comfortably Numb", 30, "Rock");
@@ -285,16 +282,39 @@ public class GerenciadorDeAlbunsTest {
 			gerenciadorDeAlbuns.adicionaAlbum(ten);
 			gerenciadorDeAlbuns.adicionaAlbum(theWall);
 			gerenciadorDeAlbuns.adicionaAlbum(darkSideOfTheMoon);
-			gerenciadorDeAlbuns.adicionaAlbum(aleluia);
+
+			ArrayList<Album> porAno = gerenciadorDeAlbuns.getAlbunsOrdenadosAlbunsPorAno();
+			ArrayList<Album> porTitulo = gerenciadorDeAlbuns.getAlbunsOrdenadosAlbunsPorTitulo();
+			ArrayList<Album> porArtista = gerenciadorDeAlbuns.getAlbunsOrdenadosAlbunsPorArtista();
+			ArrayList<Album> porDuracao = gerenciadorDeAlbuns.getAlbunsOrdenadosAlbunsPorDuracao();
+			
+			//primeiro elemento
+			boolean result = porAno.get(0).equals(darkSideOfTheMoon);
+			assertTrue(result);
+			//ultimo elemento
+			result = porAno.get(3).equals(yield);
+			assertTrue(result);
 			
 			
-			System.out.println(gerenciadorDeAlbuns.getAlbuns());
+			//primeiro elemento
+			result = porTitulo.get(0).equals(darkSideOfTheMoon);
+			assertTrue(result);
+			//ultimo elemento
+			result = porAno.get(3).equals(yield);
+			assertTrue(result);
 			
+			
+			//primeiro elemento
+			result = porDuracao.get(0).equals(yield);
+			assertTrue(result);
+			//ultimo elemento
+			result = porAno.get(3).equals(yield);
+			assertTrue(result);
 			
 			
 			
 		}catch(Exception e){
-			
+			fail("Nao deveria ter lancar exceptions");
 		}
 		
 				

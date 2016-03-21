@@ -1,11 +1,15 @@
 package spo2fy;
 
-import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.TreeMap;
 
+import comparators.AnoAlbumComparator;
+import comparators.ArtistaAlbumComparator;
+import comparators.DuracaoAlbumComparator;
+import comparators.TituloAlbumComparator;
 
 public class GerenciadorDeAlbuns {
 
@@ -219,6 +223,42 @@ public class GerenciadorDeAlbuns {
 		
 		return albunsFavoritos;
 	}
+	
+	
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorAno(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns().values());	
+		
+		Collections.sort(listaAlbuns, new AnoAlbumComparator());
+		
+		return listaAlbuns;
+	}
+	
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorTitulo(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns().values());	
+		
+		Collections.sort(listaAlbuns, new TituloAlbumComparator());
+		
+		return listaAlbuns;
+	}
+	
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorArtista(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns().values());	
+		
+		Collections.sort(listaAlbuns, new ArtistaAlbumComparator());
+		
+		return listaAlbuns;
+	}
+	
+	public ArrayList<Album> getAlbunsOrdenadosAlbunsPorDuracao(){
+		ArrayList<Album> listaAlbuns= new ArrayList<Album>(this.getAlbuns().values());	
+		
+		Collections.sort(listaAlbuns, new DuracaoAlbumComparator());
+		
+		return listaAlbuns;
+	}
+	
+	
+	
 	
 	//funcionalidades de Album (delegacao)
 	public boolean adicionaFaixa(String tituloAlbum, String artistaAlbum, Musica novaMusica) throws Exception{
