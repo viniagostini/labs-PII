@@ -3,7 +3,6 @@ package spo2fy;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -71,9 +70,9 @@ public class GerenciadorDeAlbunsTest {
 		
 		// testes de exception
 		try{
-			GerenciadorDeAlbuns gerenciadorDeAlbuns2 = new GerenciadorDeAlbuns();
+			GerenciadorDeAlbuns gerenciadorDeAlbuns = new GerenciadorDeAlbuns();
 			
-			gerenciadorDeAlbuns2.adicionaAlbum(null);
+			gerenciadorDeAlbuns.adicionaAlbum(null);
 			
 		}catch(Exception e){
 			String mensagemEsperada = "Nao eh possivel trabalhar com valores de albuns vazios ou null.";
@@ -230,11 +229,77 @@ public class GerenciadorDeAlbunsTest {
 			
 			
 		}catch(Exception e){
-			fail();
+			fail("Nao deveria ter lancado exception");
+		}
+	}
+
+	@Test
+	public void testGetAlbunsFavoritos(){
+		try{
+			
+			GerenciadorDeAlbuns gerenciadorDeAlbuns = this.getGerenciadorPreenchido();
+
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			Album theWall = new Album("The Wall", 1979, "Pink Floyd");
+			Album ten = new Album("Ten", 1991, "Pearl Jam");
+			
+			gerenciadorDeAlbuns.favoritaAlbum("Dark Side of the Moon", "Pink Floyd");
+			gerenciadorDeAlbuns.favoritaAlbum("Ten", "Pearl Jam");
+			
+			ArrayList<Album> albunsFavoritos = gerenciadorDeAlbuns.getAlbunsFavoritos();
+			
+			boolean result = albunsFavoritos.contains(darkSideOfTheMoon);
+			assertTrue(result);
+			
+			result = albunsFavoritos.contains(ten);
+			assertTrue(result);
+			
+			result = albunsFavoritos.contains(theWall);
+			assertFalse(result);
+			
+			
+		}catch(Exception e){
+			fail("Nao deveria lancar exceptions");
 		}
 	}
 	
+	@Test
+	public void testOrdemAlbuns(){
 	
+		try{
+			
+			Album darkSideOfTheMoon = new Album("Dark Side of the Moon", 1973, "Pink Floyd");
+			Album theWall = new Album("The Wall", 1979, "Pink Floyd");
+			Album ten = new Album("Ten", 1991, "Pearl Jam");
+			Album yield = new Album("Yield", 1998, "Pearl Jam");
+			Album aleluia = new Album("Aleluia", 1998, "Pearl Jam");
+			
+			darkSideOfTheMoon.adicionaFaixa("Time", 50, "Rock");
+			theWall.adicionaFaixa("Comfortably Numb", 30, "Rock");
+			ten.adicionaFaixa("Alive", 20, "Rock");
+			yield.adicionaFaixa("Given to Fly", 10, "Rock");
+			
+			GerenciadorDeAlbuns gerenciadorDeAlbuns = new GerenciadorDeAlbuns();
+
+			gerenciadorDeAlbuns.adicionaAlbum(yield);
+			gerenciadorDeAlbuns.adicionaAlbum(ten);
+			gerenciadorDeAlbuns.adicionaAlbum(theWall);
+			gerenciadorDeAlbuns.adicionaAlbum(darkSideOfTheMoon);
+			gerenciadorDeAlbuns.adicionaAlbum(aleluia);
+			
+			
+			System.out.println(gerenciadorDeAlbuns.getAlbuns());
+			
+			
+			
+			
+		}catch(Exception e){
+			
+		}
+		
+				
+		
+	}
 	
 	private GerenciadorDeAlbuns getGerenciadorPreenchido(){
 		GerenciadorDeAlbuns gerenciadorDeAlbuns = new GerenciadorDeAlbuns();
