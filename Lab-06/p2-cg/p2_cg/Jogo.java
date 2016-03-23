@@ -45,8 +45,6 @@ public class Jogo {
 		}
 	}
 
-	
-	
 	private void incrementaNJogadas(){
 		this.nJogadas ++;
 	}
@@ -149,13 +147,6 @@ public class Jogo {
 		
 	}
 
-
-	
-	
-	
-	
-	
-	
 	
 	
 }

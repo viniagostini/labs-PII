@@ -251,7 +251,7 @@ public class Album implements Comparable<Album> {
 		int anoExterno = outroAlbum.getAno();
 		
 		// se a subtracao entre o ano da classe atual e a outra classe for positiva,
-		// significa que o maior ano é o da classe interna, se for negativa será o contrario,
+		// significa que o maior ano ï¿½ o da classe interna, se for negativa serï¿½ o contrario,
 		// e se for 0, as duas sao iguais...
 
 		return anoInterno - anoExterno;	
