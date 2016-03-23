@@ -76,10 +76,16 @@ public class Jogo {
 	}
 	
 	public HashSet<Jogabilidade> getJogabilidades() {
+		/**
+		 * Retorna um HashSet que contem as jogabilidades do jogo 
+		 */
 		return jogabilidades;
 	}
 
 	public void setJogabilidades(HashSet<Jogabilidade> jogabilidades) {
+		/**
+		 * Altera o HashSet que contem as jogabilidades do jogo 
+		 */
 		this.jogabilidades = jogabilidades;
 	}
 	
