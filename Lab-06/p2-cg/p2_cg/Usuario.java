@@ -2,7 +2,7 @@ package p2_cg;
 
 import java.util.HashSet;
 
-public class Usuario {
+public abstract class Usuario {
 
 	private String nome;
 	private HashSet<Jogo> jogos;
@@ -19,44 +19,27 @@ public class Usuario {
 	}
 	
 	
-	public boolean realizaCompra(Jogo novoJogo)throws Exception{
-		
-		double precoJogo = novoJogo.getPreco();
-		
-		if(this.getJogos().contains(novoJogo)){
-			throw new Exception("O Usuario ja possui o jogo especificado");
-		}
-		
-		if(this.getSaldo() >= precoJogo){
-			
-			this.getJogos().add(novoJogo);
-			this.abateSaldo(precoJogo);
-			
-			return true;
-			
-		}else{
-			return false;
-		}
-	}
+	public abstract boolean realizaCompra(Jogo novoJogo)throws Exception;
 	
+	//melhorar isso
 	public void incrementaSaldo(double valor)throws Exception{
 		
-		this.validaIncrementaSaldo(valor);
+		this.validaValorSaldo(valor);
 		
-		
-		
+		this.saldo = this.saldo + valor;
 	}
 	
-	private void abateSaldo(double valor){
+	public void abateSaldo(double valor)throws Exception{
+		
+		this.validaValorSaldo(valor);
+		
 		double saldoAtual = this.getSaldo();
 		saldoAtual = saldoAtual - valor;
 		
 		this.setSaldo(saldoAtual);
 	}
 	
-	
-
-	
+		
 	private void validaConstrutor(String nome)throws Exception{
 		
 		if(nome == null || nome.trim().isEmpty()){
@@ -65,7 +48,7 @@ public class Usuario {
 		
 	}
 	
-	private void validaIncrementaSaldo(double valor)throws Exception{
+	private void validaValorSaldo(double valor)throws Exception{
 		
 		if( valor < 0 ){
 			throw new Exception("Nao eh permitido o incremento de saldo negativo");
