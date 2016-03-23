@@ -22,13 +22,37 @@ public class Jogo {
 	}
 	
 	
-	
 	public boolean adicionaJogabilidade(Jogabilidade jogabilidade)throws Exception{
 
 		//metodo que verifica se os parametros sao validos, caso contrario sera lancada uma exception
 		this.validaAdicionaJogabiliade(jogabilidade);
 		
 		return this.getJogabilidades().add(jogabilidade);
+	}
+	
+	public void registraJogada(int score, boolean zerou)throws Exception{
+		
+		this.validaRegistraJogada(score);
+		
+		if(this.getMaiorScore() < score){
+			this.setMaiorScore(score);
+		}
+		
+		this.incrementaNJogadas();
+		
+		if(zerou){
+			incrementaNZeradas();
+		}
+	}
+
+	
+	
+	private void incrementaNJogadas(){
+		this.nJogadas ++;
+	}
+	
+	private void incrementaNZeradas(){
+		this.nZeradas++;
 	}
 	
 	
@@ -89,8 +113,16 @@ public class Jogo {
 		this.jogabilidades = jogabilidades;
 	}
 	
+	public int getnJogadas() {
+		return nJogadas;
+	}
+
+	public int getnZeradas() {
+		return nZeradas;
+	}
+
 	
-	//metodos verificdores
+	//metodos de validacao
 	
 	private void validaConstrutor(String nome, double preco)throws Exception{
 		
@@ -109,6 +141,13 @@ public class Jogo {
 		}
 	}
 
+	private void validaRegistraJogada(int score)throws Exception{
+		
+		if(score < 0){
+			throw new Exception("Nao eh permitido o registro de score negativo");
+		}
+		
+	}
 
 
 	
