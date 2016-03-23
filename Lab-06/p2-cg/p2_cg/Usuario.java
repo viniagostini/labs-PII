@@ -27,7 +27,6 @@ public class Usuario {
 			throw new Exception("O Usuario ja possui o jogo especificado");
 		}
 		
-		
 		if(this.getSaldo() >= precoJogo){
 			
 			this.getJogos().add(novoJogo);
@@ -40,6 +39,13 @@ public class Usuario {
 		}
 	}
 	
+	public void incrementaSaldo(double valor)throws Exception{
+		
+		this.validaIncrementaSaldo(valor);
+		
+		
+		
+	}
 	
 	private void abateSaldo(double valor){
 		double saldoAtual = this.getSaldo();
@@ -50,7 +56,7 @@ public class Usuario {
 	
 	
 
-
+	
 	private void validaConstrutor(String nome)throws Exception{
 		
 		if(nome == null || nome.trim().isEmpty()){
@@ -58,8 +64,17 @@ public class Usuario {
 		}
 		
 	}
+	
+	private void validaIncrementaSaldo(double valor)throws Exception{
+		
+		if( valor < 0 ){
+			throw new Exception("Nao eh permitido o incremento de saldo negativo");
+		}
+	}
 
-
+	
+	
+	//getters  setters
 	public String getNome() {
 		return nome;
 	}
