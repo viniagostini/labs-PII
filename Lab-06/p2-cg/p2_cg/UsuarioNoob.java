@@ -1,5 +1,7 @@
 package p2_cg;
 
+import jogos.Jogo;
+
 public class UsuarioNoob extends Usuario{
 
 	public static final double DESCONTO =  0.1; //10% de desconto

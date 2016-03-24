@@ -1,4 +1,4 @@
-package p2_cg;
+package jogos;
 
 public enum Jogabilidade {
 

@@ -1,15 +1,19 @@
-package p2_cg;
+package jogos;
 
 import java.util.HashSet;
 
-public class Jogo {
-
+public abstract class Jogo {
+	
+	//info de jogo
 	private String nome;
 	private double preco;
+	private HashSet<Jogabilidade> jogabilidades;
+	
+	
+	//estatisticas
 	private int maiorScore;
 	private int nJogadas;
 	private int nZeradas;
-	private HashSet<Jogabilidade> jogabilidades;
 	
 	public Jogo(String nome, double preco)throws Exception{
 		//metodo que verifica se os parametros sao validos, caso contrario sera lancada uma exception
@@ -30,26 +34,14 @@ public class Jogo {
 		return this.getJogabilidades().add(jogabilidade);
 	}
 	
-	public void registraJogada(int score, boolean zerou)throws Exception{
-		
-		this.validaRegistraJogada(score);
-		
-		if(this.getMaiorScore() < score){
-			this.setMaiorScore(score);
-		}
-		
-		this.incrementaNJogadas();
-		
-		if(zerou){
-			incrementaNZeradas();
-		}
-	}
+	
+	public abstract int registraJogada(int score, boolean zerou)throws Exception;
 
-	private void incrementaNJogadas(){
+	public void incrementaNJogadas(){
 		this.nJogadas ++;
 	}
 	
-	private void incrementaNZeradas(){
+	public void incrementaNZeradas(){
 		this.nZeradas++;
 	}
 	

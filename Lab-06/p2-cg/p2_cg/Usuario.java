@@ -2,6 +2,8 @@ package p2_cg;
 
 import java.util.HashSet;
 
+import jogos.Jogo;
+
 public abstract class Usuario {
 
 	private String nome;
@@ -38,7 +40,6 @@ public abstract class Usuario {
 		
 		this.setSaldo(saldoAtual);
 	}
-	
 		
 	private void validaConstrutor(String nome)throws Exception{
 		
