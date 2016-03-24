@@ -5,7 +5,7 @@ public class JogoLuta extends Jogo{
 
 	public static final int MAIOR_SCORE_POSSIVEL = 100000;
 	
-	
+	//falta verificar
 	public JogoLuta(String nome, double preco) throws Exception {
 		
 		super(nome, preco);
