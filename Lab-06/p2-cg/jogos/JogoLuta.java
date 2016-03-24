@@ -9,7 +9,6 @@ public class JogoLuta extends Jogo{
 	public JogoLuta(String nome, double preco) throws Exception {
 		
 		super(nome, preco);
-		
 	}
 
 	@Override
@@ -21,25 +20,21 @@ public class JogoLuta extends Jogo{
 			throw new Exception("Tah de hack");
 		}
 		
+		if(zerou){
+			this.incrementaNZeradas();
+		}
 		
+		this.incrementaNJogadas();
+		
+		int x2p = 0;
 		
 		if(score > this.getMaiorScore()){
 			
 			this.setMaiorScore(score);
-			
-			int x2p = score / 1000;
-			
-			return x2p;
-			
-			
-		}else{
-			return 0;
+			x2p = score / 1000;
 		}
 		
-		
-		
-		
-		
+		return x2p;
 	}
 
 	

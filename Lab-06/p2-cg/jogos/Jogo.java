@@ -25,6 +25,7 @@ public abstract class Jogo {
 		this.jogabilidades = new HashSet<Jogabilidade>();
 	}
 	
+	public abstract int registraJogada(int score, boolean zerou)throws Exception;
 	
 	public boolean adicionaJogabilidade(Jogabilidade jogabilidade)throws Exception{
 
@@ -34,9 +35,6 @@ public abstract class Jogo {
 		return this.getJogabilidades().add(jogabilidade);
 	}
 	
-	
-	public abstract int registraJogada(int score, boolean zerou)throws Exception;
-
 	public void incrementaNJogadas(){
 		this.nJogadas ++;
 	}
