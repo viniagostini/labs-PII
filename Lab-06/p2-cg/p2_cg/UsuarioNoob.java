@@ -19,6 +19,7 @@ public class UsuarioNoob extends Usuario{
 		
 		if(this.getJogos().contains(novoJogo)){
 			throw new Exception("O Usuario ja possui o jogo especificado");
+			
 		}
 		
 		
