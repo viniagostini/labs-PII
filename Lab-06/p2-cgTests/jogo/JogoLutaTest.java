@@ -195,7 +195,9 @@ public class JogoLutaTest {
 			
 			JogoLuta mortalKombat = new JogoLuta("Mortal Kombat", 100);
 			
-			mortalKombat.registraJogada(100001, true);
+			int maiorQueOPermitido = JogoLuta.MAIOR_SCORE_POSSIVEL + 1;
+			
+			mortalKombat.registraJogada(maiorQueOPermitido, true);
 			
 			fail("deveria ter lancado uma LogicaDeNegociosExecption.");
 			

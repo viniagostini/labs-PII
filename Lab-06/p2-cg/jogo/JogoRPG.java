@@ -46,6 +46,10 @@ public class JogoRPG extends Jogo{
 			this.incrementaNZeradas();
 		}
 		
+		if(score > this.getMaiorScore()){
+			this.setMaiorScore(score);
+		}
+		
 		int x2p = 10;
 		
 		return x2p;
