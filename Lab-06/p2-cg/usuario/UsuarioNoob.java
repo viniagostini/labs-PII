@@ -2,22 +2,38 @@ package usuario;
 
 import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
-import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
-import exceptions.ValorNumericoInvalidoException;
 import jogo.Jogo;
 
+
+/**
+ * Classe que herda comportamentos e estados de {@link usuario.Usuario}
+ * e implemeta comportamentos especificos de Usuario noob;
+ * 
+ * @author Vinicius A. Agostini
+ */
 public class UsuarioNoob extends Usuario{
 
 	public static final double DESCONTO =  0.1; //10% de desconto
 	public static final int MULTIPLICADOR_DE_X2P =  10;
 	
-	
-	
+	/**
+	 * Contrutor que chama o super 
+	 * @see Usuario
+	 * 
+	 * @param nome - nome do usuario
+	 * @param login - login do usuario
+	 * @throws StringInvalidaException - Caso o nome de usuario ou o login
+	 * sejam vazios ou nulos
+	 */
 	public UsuarioNoob(String nome, String login) throws StringInvalidaException {
 		super(nome, login);
 	}
 
+	/**
+	 * Realiza uma compra aplicando o desconto especifico
+	 * para usuarios noob
+	 */
 	@Override
 	public void realizaCompra(Jogo novoJogo) throws DadosInvalidosException, LogicaDeNegociosExecption {
 		
@@ -41,41 +57,30 @@ public class UsuarioNoob extends Usuario{
 		int x2pRecebido = this.calculaX2pRecebidoEmCompra(precoJogo);
 		
 		this.incrementaX2p(x2pRecebido);
-		
 	}
 	
-	
-	@Override
-	public void registraJogada(String nomeDoJogo, int score, boolean zerou) throws P2CGException {
-		
-		this.validaRegistaJogada(nomeDoJogo, score);
-		
-		Jogo jogoJogado = this.buscaJogo(nomeDoJogo);
-		
-		int x2p = jogoJogado.registraJogada(score, zerou);
-		
-		this.incrementaX2p(x2p);
-	}
-
 	
 	private double aplicaDesconto(double valor){
 		return valor - valor * DESCONTO;
 	}
 
+	
 	private int calculaX2pRecebidoEmCompra(double valorJogo){
 		
 		return (int) valorJogo * MULTIPLICADOR_DE_X2P;
 	}
 	
-	private void validaRegistaJogada(String nomeDoJogo, int score) throws ValorNumericoInvalidoException, StringInvalidaException{
+	
+	public String toString(){
+		String quebraDeLinha = System.lineSeparator();
 		
-		this.validaNomeJogo(nomeDoJogo);
+		String retorno = "-----------Jogador Noob-------------" + quebraDeLinha;
 		
-		if( score < 0 ){
-			throw new ValorNumericoInvalidoException("Nao eh permitido o registro de score negativo");
-		}
-
+		retorno += super.toString();
+		
+		return retorno;
 	}
+
 	
 	private void validaJogo(Jogo jogo) throws DadosInvalidosException{
 		

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import javax.security.auth.login.LoginException;
 
 import exceptions.LogicaDeNegociosExecption;
+import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 import jogo.Jogo;
@@ -53,20 +54,25 @@ public abstract class Usuario {
 	
 	
 	/**
-	 * Metodo abstrato que diz respeito a um comportamento
+	 * Metodo que diz respeito a um comportamento
 	 * essencial a todo usuario: registrar suas jogadas.
 	 * 
 	 * @param String - Nome do jogo
 	 * @param int - score da partida realizada pelo usuario
 	 * @param boolean - o usuario zerou ou nao o jogo nessa partida
 	 * 
-	 * @return int - o x2p obtido na partida realizada
-	 * 
-	 * @throws Exception - cabe as filhas dessa classe
-	 * definirem e tratarem suas proprias exception
+	 * @throws P2CGException
 	 */
-	public abstract void registraJogada(String nomeDoJogo, int score, boolean zerou)throws Exception;
-	
+	public void registraJogada(String nomeDoJogo, int score, boolean zerou) throws P2CGException {
+		
+		this.validaRegistaJogada(nomeDoJogo, score);
+		
+		Jogo jogoJogado = this.buscaJogo(nomeDoJogo);
+		
+		int x2p = jogoJogado.registraJogada(score, zerou);
+		
+		this.incrementaX2p(x2p);
+	}
 	
 	/**
 	 * Metodo que recebe um valor e incrementa o mesmo
@@ -184,7 +190,7 @@ public abstract class Usuario {
 		return false;
 	}
 	
-	
+	//metodos de validacao
 	private void validaConstrutor(String nome, String login)throws StringInvalidaException{
 		
 		if(nome == null || nome.trim().isEmpty()){
@@ -216,6 +222,78 @@ public abstract class Usuario {
 		}
 	}
 	
+	private void validaRegistaJogada(String nomeDoJogo, int score) throws ValorNumericoInvalidoException, StringInvalidaException{
+		
+		this.validaNomeJogo(nomeDoJogo);
+		
+		if( score < 0 ){
+			throw new ValorNumericoInvalidoException("Nao eh permitido o registro de score negativo");
+		}
+
+	}
+	
+	//metodos triviais
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj instanceof Usuario){
+			
+			Usuario outroUsuario = (Usuario) obj;
+			
+			String outroNome = outroUsuario.getNome();
+			String outroLogin = outroUsuario.getLogin();
+			
+			boolean nomesIguais = this.getNome().equals(outroNome);
+			boolean loginsIguais = this.getLogin().equals(outroLogin);
+			
+			if(nomesIguais && loginsIguais){
+				return true;
+			}			
+		}
+
+		return false;
+	}
+
+	public String toString(){
+		String quebraDeLinha = System.lineSeparator();
+		
+		String retorno = "";
+		
+		retorno += "Nome: " + this.getNome() + quebraDeLinha;
+		
+		retorno += "Login: " + this.getLogin() + quebraDeLinha;
+		
+		retorno += "Saldo: R$" + this.getSaldo() + quebraDeLinha;
+		
+		retorno += "x2p: " + this.getX2p()+ quebraDeLinha;
+		
+		retorno += "Lista de Jogos: ";
+		
+		double precoTotal = 0;
+		
+		for(Jogo jogoAtual : this.getJogos()){
+			retorno += jogoAtual.toString();
+			double precoAtual = jogoAtual.getPreco();
+			precoTotal = precoTotal + precoAtual;
+		}
+		
+		retorno += "Total de preço dos jogos: R$ " + precoTotal;
+		
+		retorno += "---------------------------------------------";
+		
+		return retorno;
+	}
+
 	
 	//getters  setters
 	public String getNome() {
