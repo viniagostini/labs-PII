@@ -2,16 +2,14 @@ package jogos;
 
 public class JogoPlataforma extends Jogo{
 
+	
+	
 	public JogoPlataforma(String nome, double preco) throws Exception {
+		//eh responsabilidade do super validar os dados
 		super(nome, preco);
 	}
 
-
-
-
-
-
-
+	
 	@Override
 	public int registraJogada(int score, boolean zerou) throws Exception {
 		
@@ -31,11 +29,7 @@ public class JogoPlataforma extends Jogo{
 		return x2p;
 	}
 
-	
-	
-	
-	
-	
+
 	
 	private void validaRegistaJogada(int score) throws Exception{
 		
@@ -43,6 +37,5 @@ public class JogoPlataforma extends Jogo{
 			throw new Exception("Nao eh permitido o registro de score negativo");
 		}	
 	}
-	
-	
+
 }

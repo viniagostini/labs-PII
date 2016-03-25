@@ -3,6 +3,7 @@ package jogos;
 public class JogoRPG extends Jogo{
 
 	public JogoRPG(String nome, double preco) throws Exception {
+		//eh responsabilidade do super validar os dados
 		super(nome, preco);
 	}
 
