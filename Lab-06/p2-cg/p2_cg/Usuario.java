@@ -1,10 +1,8 @@
 package p2_cg;
 
-import java.sql.Array;
 import java.util.HashSet;
-
 import jogo.Jogo;
-import jogo.JogoLuta;
+
 
 public abstract class Usuario {
 

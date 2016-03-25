@@ -1,15 +1,42 @@
 package jogo;
 
+import exceptions.StringInvalidaException;
+import exceptions.ValorNumericoInvalidoException;
+
+/**
+ * Classe que herda comportamentos e estados de {@link jogo.Jogo}
+ * e implemeta comportamentos especificos de jogos de RPG.
+ * 
+ * @author Vinicius A. Agostini
+ */
+
 public class JogoRPG extends Jogo{
 
+	/**
+	 * Construtor que chama o super
+	 * @see Jogo
+	 * 
+	 * @param nome
+	 * @param preco
+	 *
+	 * @throws StringInvalidaException - caso uma String vazia ou nula
+	 * seja passada em nome.
+	 * 
+	 * @throws ValorNumericoInvalidoException - caso o preco seja negativo.
+	 */
 	public JogoRPG(String nome, double preco) throws Exception {
 		//eh responsabilidade do super validar os dados
 		super(nome, preco);
 	}
 
-
+	/**
+	 * Sobrescreve o metodo registraJogada da classe mae {@link jogo.Jogo}
+	 * adicionando o comportamento especifico de jogos de RPG.
+	 * 
+	 * @exception ValorNumericoInvalidoException - caso o score seja negativo
+	 */
 	@Override
-	public int registraJogada(int score, boolean zerou) throws Exception {
+	public int registraJogada(int score, boolean zerou) throws ValorNumericoInvalidoException {
 		
 		this.validaRegistaJogada(score);
 		
@@ -25,15 +52,10 @@ public class JogoRPG extends Jogo{
 	}
 
 	
-	
-	
-	
-	
-	
-	private void validaRegistaJogada(int score) throws Exception{
+	private void validaRegistaJogada(int score) throws ValorNumericoInvalidoException{
 		
 		if( score < 0 ){
-			throw new Exception("Nao eh permitido o registro de score negativo");
+			throw new ValorNumericoInvalidoException("Nao eh permitido o registro de score negativo");
 		}	
 	}
 	

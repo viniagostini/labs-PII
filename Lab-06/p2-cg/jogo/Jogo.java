@@ -7,11 +7,10 @@ import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
 /**
- * 
- * @author Vinicius A. Agostini
- * 
  * Classe abstrata que encapsula todos os comportamentos e estados que um
  * jogo deve possuir nesse sistema.
+ * 
+ * @author Vinicius A. Agostini
  */
 
 public abstract class Jogo {
@@ -27,13 +26,12 @@ public abstract class Jogo {
 	private int nJogadas;
 	private int nZeradas;
 	
+	
 	/**
-	 * Construtor que recebe como parametro:
-	 * @param String - nome 
-	 * @param String - preco
+	 * Construtor
 	 * 
-	 * valida esses dados, armazena e inicializa o um HashSet
-	 * de jogabilidades.
+	 * @param String - nome do jogo 
+	 * @param String - preco do jogo
 	 * 
 	 * @throws StringInvalidaException - caso uma String vazia ou nula
 	 * seja passada em nome.
@@ -50,24 +48,28 @@ public abstract class Jogo {
 		this.jogabilidades = new HashSet<Jogabilidade>();
 	}
 	
+	
 	/**
-	 * Metodo que registra cada jogada realizada pelo usuario
+	 * Metodo que registra cada jogada realizada pelo usuario.
 	 * 
-	 * @param score
-	 * @param zerou
+	 * @param int - score da jogada
+	 * @param boolean - zerou ou nao o jogo
+	 * 
 	 * @return int - x2p gerado por cada jogada
-	 * @throws Exception
+	 * 
+	 * @throws Exception - eh responsabilidade de quem implementar esse metodo
+	 * definir e tratar suas exceptions.
 	 */
 	public abstract int registraJogada(int score, boolean zerou)throws Exception;
 	
+	
 	/**
 	 * Metodo que permite a adicao de diversos tipos de jogabilidade
-	 * ao jogo
+	 * ao jogo.
 	 * 
 	 * @param jogabilidade
-	 * @return false - caso o jogo ja possua a jogabilidade passada
-	 * @return true - caso o jogo nao possua a jogabilidade passada
-	 * @throws DadosInvalidosException - caso receba null como paramentro
+	 * @return boolean - jogabilidade foi adicionada ou nao.
+	 * @throws DadosInvalidosException - caso receba null como paramentro.
 	 */
 	public boolean adicionaJogabilidade(Jogabilidade jogabilidade)throws DadosInvalidosException{
 
@@ -78,14 +80,15 @@ public abstract class Jogo {
 	
 	
 	/**
-	 * Incrementa em 1 o numero de vezes que o usuario jogou o jogo
+	 * Incrementa em 1 o numero de vezes que o usuario jogou o jogo.
 	 */
 	public void incrementaNJogadas(){
 		this.nJogadas++;
 	}
+
 	
 	/**
-	 * Incrementa em 1 o numero de vezes que o usuario zerou o jogo
+	 * Incrementa em 1 o numero de vezes que o usuario zerou o jogo.
 	 */
 	public void incrementaNZeradas(){
 		this.nZeradas++;
@@ -153,15 +156,5 @@ public abstract class Jogo {
 		}
 		
 	}
-
-	private void validaRegistraJogada(int score)throws Exception{
 		
-		if(score < 0){
-			throw new Exception("Nao eh permitido o registro de score negativo");
-		}
-		
-	}
-
-	
-	
 }

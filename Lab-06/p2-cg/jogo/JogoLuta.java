@@ -1,24 +1,54 @@
 package jogo;
 
+import exceptions.LogicaDeNegociosExecption;
+import exceptions.StringInvalidaException;
+import exceptions.ValorNumericoInvalidoException;
+
+/**
+ * Classe que herda comportamentos e estados de {@link jogo.Jogo}
+ * e implemeta comportamentos especificos de jogos de luta.
+ * 
+ * @author Vinicius A. Agostini
+ */
 
 public class JogoLuta extends Jogo{
 
 	public static final int MAIOR_SCORE_POSSIVEL = 100000;
 	
 	
-	public JogoLuta(String nome, double preco) throws Exception {
-		//eh responsabilidade do super validar os dados
+	/**
+	 * Construtor que chama o super
+	 * @see Jogo
+	 * 
+	 * @param nome
+	 * @param preco
+	 *
+	 * @throws StringInvalidaException - caso uma String vazia ou nula
+	 * seja passada em nome.
+	 * 
+	 * @throws ValorNumericoInvalidoException - caso o preco seja negativo.
+	 */
+	public JogoLuta(String nome, double preco) throws StringInvalidaException , ValorNumericoInvalidoException {
 		super(nome, preco);
 	}
 	
 	
+	/**
+	 * Sobrescreve o metodo registraJogada da classe mae {@link jogo.Jogo}
+	 * adicionando o comportamento especifico de jogos de luta.
+	 * 
+	 * @exception ValorNumericoInvalidoException - caso o score seja negativo
+	 * 
+	 * 
+	 * @exception LogicaDeNegociosExecption - caso o score esteja acima de 100000
+	 */
 	@Override
-	public int registraJogada(int score, boolean zerou) throws Exception {
+	public int registraJogada(int score, boolean zerou) throws ValorNumericoInvalidoException, LogicaDeNegociosExecption {
 		
 		this.validaRegistaJogada(score);
 		
-		if(score >= MAIOR_SCORE_POSSIVEL){
-			throw new Exception("Tah de hack");
+		if(score > MAIOR_SCORE_POSSIVEL){
+			throw new LogicaDeNegociosExecption("Tah de hack");
 		}
 		
 		if(zerou){
@@ -38,12 +68,12 @@ public class JogoLuta extends Jogo{
 		return x2p;
 	}
 
-	private void validaRegistaJogada(int score) throws Exception{
+	
+	private void validaRegistaJogada(int score) throws ValorNumericoInvalidoException{
 		
 		if( score < 0 ){
-			throw new Exception("Nao eh permitido o registro de score negativo");
+			throw new ValorNumericoInvalidoException("Nao eh permitido o registro de score negativo");
 		}	
 	}
 	
-
 }
