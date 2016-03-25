@@ -55,7 +55,19 @@ public class JogoPlataforma extends Jogo{
 		return x2p;
 	}
 
+	
+	@Override
+	public String toString(){
+		String quebraDeLinha = System.lineSeparator();
+		
+		String retorno = "Jogo de Plataforma: " + quebraDeLinha;
+		
+		retorno += super.toString();
+		
+		return retorno;
+	}
 
+	
 	private void validaRegistaJogada(int score) throws ValorNumericoInvalidoException{
 		
 		if( score < 0 ){

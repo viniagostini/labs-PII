@@ -52,6 +52,18 @@ public class JogoRPG extends Jogo{
 	}
 
 	
+	@Override
+	public String toString(){
+		String quebraDeLinha = System.lineSeparator();
+		
+		String retorno = "Jogo de RPG: " + quebraDeLinha;
+		
+		retorno += super.toString();
+		
+		return retorno;
+	}
+	
+	
 	private void validaRegistaJogada(int score) throws ValorNumericoInvalidoException{
 		
 		if( score < 0 ){

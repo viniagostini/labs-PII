@@ -94,7 +94,61 @@ public abstract class Jogo {
 		this.nZeradas++;
 	}
 	
+	//metodos triviais
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(preco);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Jogo){
+			Jogo outroJogo = (Jogo) obj;
+			
+			String outroNome = outroJogo.getNome();
+			double outroPreco = outroJogo.getPreco();
+			
+			boolean nomesIguais = this.getNome().equals(outroNome);
+			boolean precosIguais = this.getPreco() == outroPreco;
+			
+			if(nomesIguais && precosIguais){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	@Override
+	public String toString() {
+		String quebraDeLinha = System.lineSeparator();
+		String retorno = "";
+		
+		retorno += "    Titulo: " + this.getNome() + quebraDeLinha; 
+		
+		retorno += "    Preco: R$" + this.getPreco() + quebraDeLinha;
+		
+		retorno += "    Jogabilidades: " + this.getJogabilidades() + quebraDeLinha;
+		
+		retorno += "    Recorde: " + this.getMaiorScore() + quebraDeLinha;
+		
+		retorno += "    Jogado " + this.getnJogadas() + " vezes." + quebraDeLinha;
+		
+		retorno += "    Zerado " + this.getnZeradas() + " vezes." + quebraDeLinha;
+		
+		return retorno;
+	}
+
+
 	// getters e setters
 	public String getNome() {
 		return nome;
