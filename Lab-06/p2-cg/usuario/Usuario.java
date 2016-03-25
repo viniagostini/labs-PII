@@ -1,4 +1,4 @@
-package p2_cg;
+package usuario;
 
 import java.util.HashSet;
 import jogo.Jogo;
