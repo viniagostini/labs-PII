@@ -3,6 +3,7 @@ package jogo;
 import java.util.HashSet;
 
 import exceptions.DadosInvalidosException;
+import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
@@ -60,7 +61,7 @@ public abstract class Jogo {
 	 * @throws Exception - eh responsabilidade de quem implementar esse metodo
 	 * definir e tratar suas exceptions.
 	 */
-	public abstract int registraJogada(int score, boolean zerou)throws Exception;
+	public abstract int registraJogada(int score, boolean zerou)throws P2CGException;
 	
 	
 	/**
