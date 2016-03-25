@@ -1,8 +1,10 @@
 package p2_cg;
 
+import java.sql.Array;
 import java.util.HashSet;
 
 import jogo.Jogo;
+import jogo.JogoLuta;
 
 public abstract class Usuario {
 
@@ -18,6 +20,7 @@ public abstract class Usuario {
 		this.nome = nome;
 		this.saldo = 0;
 		this.jogos = new HashSet<Jogo>();
+		
 	}
 	
 	

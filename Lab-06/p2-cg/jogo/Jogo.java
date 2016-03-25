@@ -2,6 +2,18 @@ package jogo;
 
 import java.util.HashSet;
 
+import exceptions.DadosInvalidosException;
+import exceptions.StringInvalidaException;
+import exceptions.ValorNumericoInvalidoException;
+
+/**
+ * 
+ * @author Vinicius A. Agostini
+ * 
+ * Classe abstrata que encapsula todos os comportamentos e estados que um
+ * jogo deve possuir nesse sistema.
+ */
+
 public abstract class Jogo {
 	
 	//info de jogo
@@ -15,8 +27,21 @@ public abstract class Jogo {
 	private int nJogadas;
 	private int nZeradas;
 	
-	public Jogo(String nome, double preco)throws Exception{
-		//metodo que verifica se os parametros sao validos, caso contrario sera lancada uma exception
+	/**
+	 * Construtor que recebe como parametro:
+	 * @param String - nome 
+	 * @param String - preco
+	 * 
+	 * valida esses dados, armazena e inicializa o um HashSet
+	 * de jogabilidades.
+	 * 
+	 * @throws StringInvalidaException - caso uma String vazia ou nula
+	 * seja passada em nome.
+	 * 
+	 * @throws ValorNumericoInvalidoException - caso o preco seja negativo.
+	 */
+	public Jogo(String nome, double preco)throws StringInvalidaException , ValorNumericoInvalidoException{
+		
 		this.validaConstrutor(nome, preco);
 		
 		this.nome = nome;
@@ -25,20 +50,43 @@ public abstract class Jogo {
 		this.jogabilidades = new HashSet<Jogabilidade>();
 	}
 	
+	/**
+	 * Metodo que registra cada jogada realizada pelo usuario
+	 * 
+	 * @param score
+	 * @param zerou
+	 * @return int - x2p gerado por cada jogada
+	 * @throws Exception
+	 */
 	public abstract int registraJogada(int score, boolean zerou)throws Exception;
 	
-	public boolean adicionaJogabilidade(Jogabilidade jogabilidade)throws Exception{
+	/**
+	 * Metodo que permite a adicao de diversos tipos de jogabilidade
+	 * ao jogo
+	 * 
+	 * @param jogabilidade
+	 * @return false - caso o jogo ja possua a jogabilidade passada
+	 * @return true - caso o jogo nao possua a jogabilidade passada
+	 * @throws DadosInvalidosException - caso receba null como paramentro
+	 */
+	public boolean adicionaJogabilidade(Jogabilidade jogabilidade)throws DadosInvalidosException{
 
-		//metodo que verifica se os parametros sao validos, caso contrario sera lancada uma exception
 		this.validaAdicionaJogabiliade(jogabilidade);
 		
 		return this.getJogabilidades().add(jogabilidade);
 	}
 	
+	
+	/**
+	 * Incrementa em 1 o numero de vezes que o usuario jogou o jogo
+	 */
 	public void incrementaNJogadas(){
-		this.nJogadas ++;
+		this.nJogadas++;
 	}
 	
+	/**
+	 * Incrementa em 1 o numero de vezes que o usuario zerou o jogo
+	 */
 	public void incrementaNZeradas(){
 		this.nZeradas++;
 	}
@@ -46,58 +94,34 @@ public abstract class Jogo {
 	
 	// getters e setters
 	public String getNome() {
-		/**
-		 * retorna o valor do parametro nome
-		 */
 		return nome;
 	}
 	
 	public void setNome(String nome) {
-		/**
-		 * modifica o valor do parametro nome
-		 */
 		this.nome = nome;
 	}
 	
 	public double getPreco() {
-		/**
-		 * retorna o valor do parametro preco
-		 */
 		return preco;
 	}
 	
 	public void setPreco(double preco) {
-		/**
-		 * modifica o valor do parametro preco
-		 */
 		this.preco = preco;
 	}
 	
 	public int getMaiorScore() {
-		/**
-		 * retorna o valor do parametro maiorScore
-		 */
 		return maiorScore;
 	}
 	
 	public void setMaiorScore(int maiorScore) {
-		/**
-		 * modifica o valor do parametro maiorScore
-		 */
 		this.maiorScore = maiorScore;
 	}
 	
 	public HashSet<Jogabilidade> getJogabilidades() {
-		/**
-		 * Retorna um HashSet que contem as jogabilidades do jogo 
-		 */
 		return jogabilidades;
 	}
 
 	public void setJogabilidades(HashSet<Jogabilidade> jogabilidades) {
-		/**
-		 * Altera o HashSet que contem as jogabilidades do jogo 
-		 */
 		this.jogabilidades = jogabilidades;
 	}
 	
@@ -111,22 +135,23 @@ public abstract class Jogo {
 
 	
 	//metodos de validacao
-	
-	private void validaConstrutor(String nome, double preco)throws Exception{
+	private void validaConstrutor(String nome, double preco)throws StringInvalidaException , ValorNumericoInvalidoException{
 		
 		if( nome == null || nome.trim().isEmpty() ){
-			throw new Exception("Nao eh permitida a criacao de Jogos com nome vazio ou nulo.");
+			throw new StringInvalidaException("Nao eh permitida a criacao de Jogos com nome vazio ou nulo.");
 		}
 		
 		if( preco < 0 ){
-			throw new Exception("Nao eh permitida a criacao de Jogos com preco negativo.");
+			throw new ValorNumericoInvalidoException("Nao eh permitida a criacao de Jogos com preco negativo.");
 		}
 	}
 	
-	private void validaAdicionaJogabiliade(Jogabilidade jogabilidade)throws Exception{
+	private void validaAdicionaJogabiliade(Jogabilidade jogabilidade)throws DadosInvalidosException{
+		
 		if( jogabilidade == null ){
-			throw new Exception("Nao eh permitida a adicao de jogabilidade nula");
+			throw new DadosInvalidosException("Nao eh permitida a adicao de jogabilidade nula");
 		}
+		
 	}
 
 	private void validaRegistraJogada(int score)throws Exception{
