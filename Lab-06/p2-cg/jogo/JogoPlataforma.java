@@ -52,6 +52,10 @@ public class JogoPlataforma extends Jogo{
 			x2p = 20;
 		}
 		
+		if(score > this.getMaiorScore()){
+			this.setMaiorScore(score);
+		}
+		
 		return x2p;
 	}
 

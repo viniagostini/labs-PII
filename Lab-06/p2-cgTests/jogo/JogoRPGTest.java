@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import exceptions.LogicaDeNegociosExecption;
+import exceptions.DadosInvalidosException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
@@ -190,32 +190,99 @@ public class JogoRPGTest {
 	}
 	
 	
+	@Test
+	public void testAdicionaJogabilidade() {
+		
+		//verifica se as jogabilidades estao sendo inseridas corretamente
+		try{
+			JogoRPG wow = new JogoRPG("World of Warcraft", 100);
+			
+			boolean adicionou = wow.adicionaJogabilidade(Jogabilidade.MULTIPLAYER);
+			
+			//verifica a resposta
+			assertTrue(adicionou);
+			
+			//verifica se adicionou de fato
+			boolean contem = wow.getJogabilidades().contains(Jogabilidade.MULTIPLAYER);
+			assertTrue(contem);
+			
+			
+			//adicionando outra jogabilidade
+			adicionou = wow.adicionaJogabilidade(Jogabilidade.COMPETITIVO);
+			
+			//verifica a resposta
+			assertTrue(adicionou);
+			
+			//verifica se adicionou de fato
+			contem = wow.getJogabilidades().contains(Jogabilidade.COMPETITIVO);
+			assertTrue(contem);
+			
+			
+		}catch(Exception e){
+			fail(NAO_DEVERIA_LANCAR_EXCEPTION);
+		}
+		
+		//testando inserir duas jogabilidades iguais
+		try{
+			JogoRPG wow = new JogoRPG("World of Warcraft", 100);
+			
+			boolean adicionou = wow.adicionaJogabilidade(Jogabilidade.MULTIPLAYER);
+			assertTrue(adicionou);
+			
+			//adicionando a mesma jogabilidade
+			adicionou = wow.adicionaJogabilidade(Jogabilidade.MULTIPLAYER);
+			
+			//verifica a resposta
+			assertFalse(adicionou);
+			
+		}catch(Exception e){
+			fail(NAO_DEVERIA_LANCAR_EXCEPTION);
+		}
+		
+		//testando inserir jogabilidade nula
+		try{
+			JogoRPG wow = new JogoRPG("World of Warcraft", 100);
+			
+			wow.adicionaJogabilidade(null);
+			
+			fail("Deveria ter lancado uma DadosInvalidosException.");
+			
+		}catch(DadosInvalidosException die){
+			
+			String mensagemRecebida = die.getMessage();
+			String mensagemEsperada = "Nao eh permitida a adicao de jogabilidade nula";
+			
+			assertEquals(mensagemEsperada, mensagemRecebida);
+			
+			
+		}catch (Exception e) {
+			fail(NAO_DEVERIA_LANCAR_EXCEPTION + "aqui");
+		}
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void testEquals() {
+		try{
+			JogoRPG wow = new JogoRPG("World of Warcraft", 100);
+			JogoRPG outroWow = new JogoRPG("World of Warcraft", 100);
+			JogoRPG theKingOfFighter = new JogoRPG("The King of Fighter", 100);
+			JogoRPG naruto = new JogoRPG("Naruto", 50);
+			
+			boolean iguais = wow.equals(outroWow);
+			assertTrue(iguais);
+			
+			iguais = wow.equals(theKingOfFighter);
+			assertFalse(iguais);
+			
+			iguais = wow.equals(naruto);
+			assertFalse(iguais);
+			
+			
+		}catch(Exception e){
+			fail(NAO_DEVERIA_LANCAR_EXCEPTION);
+		}
+	}
 	
 	
 }
