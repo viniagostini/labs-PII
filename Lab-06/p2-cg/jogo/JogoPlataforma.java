@@ -1,13 +1,15 @@
-package jogos;
+package jogo;
 
-public class JogoRPG extends Jogo{
+public class JogoPlataforma extends Jogo{
 
-	public JogoRPG(String nome, double preco) throws Exception {
+	
+	
+	public JogoPlataforma(String nome, double preco) throws Exception {
 		//eh responsabilidade do super validar os dados
 		super(nome, preco);
 	}
 
-
+	
 	@Override
 	public int registraJogada(int score, boolean zerou) throws Exception {
 		
@@ -15,20 +17,19 @@ public class JogoRPG extends Jogo{
 		
 		this.incrementaNJogadas();
 		
-		if(zerou){
-			this.incrementaNZeradas();
-		}
+		int x2p = 0;
 		
-		int x2p = 10;
+		if(zerou){
+			
+			this.incrementaNZeradas();	
+			
+			x2p = 20;
+		}
 		
 		return x2p;
 	}
 
-	
-	
-	
-	
-	
+
 	
 	private void validaRegistaJogada(int score) throws Exception{
 		
@@ -36,5 +37,5 @@ public class JogoRPG extends Jogo{
 			throw new Exception("Nao eh permitido o registro de score negativo");
 		}	
 	}
-	
+
 }

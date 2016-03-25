@@ -1,4 +1,4 @@
-package jogos;
+package jogo;
 
 
 public class JogoLuta extends Jogo{

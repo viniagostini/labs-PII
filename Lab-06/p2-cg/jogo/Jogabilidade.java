@@ -1,4 +1,4 @@
-package jogos;
+package jogo;
 
 public enum Jogabilidade {
 

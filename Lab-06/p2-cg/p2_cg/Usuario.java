@@ -2,7 +2,7 @@ package p2_cg;
 
 import java.util.HashSet;
 
-import jogos.Jogo;
+import jogo.Jogo;
 
 public abstract class Usuario {
 

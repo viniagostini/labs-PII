@@ -1,6 +1,6 @@
 package p2_cg;
 
-import jogos.Jogo;
+import jogo.Jogo;
 
 public class UsuarioNoob extends Usuario{
 
