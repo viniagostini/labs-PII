@@ -212,8 +212,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		}catch(Exception e){
 			fail(NAO_DEVERIA_LANCAR_EXCEPTION);
 		}
-		
-		
+			
 	}
 
 }
