@@ -49,7 +49,7 @@ public class JogoLutaTest {
 		}
 		
 		
-		//verificando insercaco de nome vazio
+		//verifica insercaco de nome vazio
 		try{
 			@SuppressWarnings("unused")
 			JogoLuta mortalKombat = new JogoLuta("", 100);

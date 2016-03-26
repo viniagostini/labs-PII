@@ -277,7 +277,7 @@ public abstract class Usuario {
 		
 		retorno += "x2p: " + this.getX2p()+ quebraDeLinha;
 		
-		retorno += "Lista de Jogos: ";
+		retorno += "Lista de Jogos: " + quebraDeLinha;
 		
 		double precoTotal = 0;
 		
@@ -287,9 +287,9 @@ public abstract class Usuario {
 			precoTotal = precoTotal + precoAtual;
 		}
 		
-		retorno += "Total de preço dos jogos: R$ " + precoTotal;
+		retorno += "Total de preço dos jogos: R$ " + precoTotal + quebraDeLinha;
 		
-		retorno += "---------------------------------------------";
+		retorno += "-----------------------------------";
 		
 		return retorno;
 	}

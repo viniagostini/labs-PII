@@ -53,6 +53,7 @@ public class UsuarioNoob extends Usuario{
 			throw new LogicaDeNegociosExecption("Saldo insuficente para comprar esse jogo");
 		}
 		
+		this.getJogos().add(novoJogo);
 		
 		int x2pRecebido = this.calculaX2pRecebidoEmCompra(precoJogo);
 		
@@ -85,7 +86,7 @@ public class UsuarioNoob extends Usuario{
 	private void validaJogo(Jogo jogo) throws DadosInvalidosException{
 		
 		if(jogo == null){
-			throw new DadosInvalidosException("Nao eh permitido jogos nulos.");
+			throw new DadosInvalidosException("Nao sao permitido jogos nulos.");
 		}
 		
 	}

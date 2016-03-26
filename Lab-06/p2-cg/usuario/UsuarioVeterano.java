@@ -15,7 +15,7 @@ import jogo.Jogo;
 
 public class UsuarioVeterano extends Usuario {
 
-	public static final double DESCONTO =  0.2; //10% de desconto
+	public static final double DESCONTO =  0.2; //20% de desconto
 	public static final int MULTIPLICADOR_DE_X2P =  15;
 	
 	
@@ -57,6 +57,7 @@ public class UsuarioVeterano extends Usuario {
 			throw new LogicaDeNegociosExecption("Saldo insuficente para comprar esse jogo");
 		}
 		
+		this.getJogos().add(novoJogo);
 		
 		int x2pRecebido = this.calculaX2pRecebidoEmCompra(precoJogo);
 		
@@ -89,7 +90,7 @@ public class UsuarioVeterano extends Usuario {
 	private void validaJogo(Jogo jogo) throws DadosInvalidosException{
 		
 		if(jogo == null){
-			throw new DadosInvalidosException("Nao eh permitido jogos nulos.");
+			throw new DadosInvalidosException("Nao sao permitido jogos nulos.");
 		}
 		
 	}
