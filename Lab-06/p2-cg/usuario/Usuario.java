@@ -81,7 +81,7 @@ public abstract class Usuario {
 	 * @param double - valor a ser incrementado
 	 * @throws ValorNumericoInvalidoException - caso o valor passado seja negativo
 	 */
-	protected void incrementaSaldo(double valor)throws ValorNumericoInvalidoException{
+	public void incrementaSaldo(double valor)throws ValorNumericoInvalidoException{
 		
 		this.validaValorSaldo(valor);
 		
@@ -287,7 +287,7 @@ public abstract class Usuario {
 			precoTotal = precoTotal + precoAtual;
 		}
 		
-		retorno += "Total de preço dos jogos: R$ " + precoTotal + quebraDeLinha;
+		retorno += "Total de preï¿½o dos jogos: R$ " + precoTotal + quebraDeLinha;
 		
 		retorno += "-----------------------------------";
 		
