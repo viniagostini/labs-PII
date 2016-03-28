@@ -287,7 +287,7 @@ public abstract class Usuario {
 			precoTotal = precoTotal + precoAtual;
 		}
 		
-		retorno += "Total de pre�o dos jogos: R$ " + precoTotal + quebraDeLinha;
+		retorno += "Total de preco dos jogos: R$ " + precoTotal + quebraDeLinha;
 		
 		retorno += "-----------------------------------";
 		
