@@ -96,10 +96,55 @@ public class Loja {
 	}
 	
 	
+	
+	/**
+	 * Metodo que recebe a copia de um jogo (sera?) e vende a um usuario
+	 * especificado por seu login.
+	 * 
+	 * @param Jogo - jogo a ser vendido
+	 * 
+	 * @param String - login do usuario
+	 */
 	public void vendeJogo(Jogo jogoVendido, String loginUsuario){
 		
 		
+		try{
+			
+			//Jogo copiaJogo = this.copiaJogo(jogoVendido);
+			//implementar a interface Clonable em jogo?? http://pt.stackoverflow.com/questions/60813/como-fazer-c%C3%B3pia-de-objetos-em-java
+			// usar factory???? http://www.devmedia.com.br/padrao-de-projeto-factory-method-em-java/26348
+			
+			
+			Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
+			
+			usuarioEncontrado.realizaCompra(jogoVendido);
+			
+		}catch(DadosInvalidosException die){
+			
+			System.out.println(die.getMessage());
+			
+		}catch(LogicaDeNegociosExecption lne){
+			
+			System.out.println(lne.getMessage());
+			
+		}catch(Exception e){
+			
+			e.getMessage();
+			
+		}
 		
+	}
+	
+	
+	public void imprimeInfoUsuarios(){
+		
+		System.out.println("== Central P2-CG ==");
+		
+		for(Usuario usuarioAtual : this.getUsuarios()){
+			
+			System.out.println(usuarioAtual);
+			
+		}
 		
 	}
 	
@@ -113,7 +158,9 @@ public class Loja {
 	 * 
 	 * @throws LogicaDeNegociosExecption - caso o usuario nao seja encontrado
 	 */
-	private Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption{
+	private Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption , DadosInvalidosException{
+		
+		this.validaLogin(loginUsuario);
 		
 		for(Usuario usuarioAtual : this.getUsuarios()){
 			
@@ -131,12 +178,40 @@ public class Loja {
 	}
 	
 
+	
+
+	private Jogo copiaJogo(Jogo jogo) throws DadosInvalidosException{
+		
+		validaJogo(jogo);
+		
+		//nao posso instanciar um novo jogo
+		
+		return null;
+	}
+	
+
+	
 	private void validaUsuario(Usuario usuario)throws DadosInvalidosException{
 		if(usuario == null){
 			throw new DadosInvalidosException("Usuarios nulos nao sao permitidos.");
 		}
 	}
+
 	
+	private void validaJogo(Jogo jogo)throws DadosInvalidosException{
+		if(jogo == null){
+			throw new DadosInvalidosException("Jogos nulos nao sao permitidos.");
+		}
+	}
+	
+	
+	private void validaLogin(String loginUsuario) throws DadosInvalidosException {
+		
+		if(loginUsuario == null || loginUsuario.trim().isEmpty()){
+			throw new DadosInvalidosException("Nao eh permitido login vazio ou nulo");
+		}
+		
+	}
 	
 	//getters e setters
 	public HashSet<Usuario> getUsuarios() {
