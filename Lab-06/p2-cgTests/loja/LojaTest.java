@@ -4,14 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import exceptions.DadosInvalidosException;
-import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
-import jogo.Jogo;
 import jogo.JogoLuta;
 import jogo.JogoPlataforma;
 import jogo.JogoRPG;
-import usuario.Usuario;
 import usuario.UsuarioNoob;
 import usuario.UsuarioVeterano;
 

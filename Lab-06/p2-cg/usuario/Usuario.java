@@ -2,8 +2,6 @@ package usuario;
 
 import java.util.HashSet;
 
-import javax.security.auth.login.LoginException;
-
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
 import exceptions.StringInvalidaException;

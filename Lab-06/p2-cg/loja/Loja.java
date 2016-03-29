@@ -8,10 +8,10 @@ import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 import usuario.Usuario;
-import usuario.UsuarioNoob;
+import usuario.UsuarioVeterano;
 
 /**
- * Classe "facade" responsavel por gerenciar uma lista de usuarios
+ * Classe "facade"/Loja responsavel por gerenciar uma lista de usuarios
  * e as operacoes de venda de jogos, adicao de novos usuarios,
  * adicao de saldo dos usuarios e impressao das informacoes de usuario.
  * 
@@ -21,8 +21,12 @@ import usuario.UsuarioNoob;
 
 public class Loja {
 
-
+	public static final int X2P_MIN_UPGRADE = 1000;
+	
+	
 	private HashSet<Usuario> usuarios;	
+	
+	
 	
 	/**
 	 * Contrutor sem parametros que inicializa
@@ -33,6 +37,8 @@ public class Loja {
 		
 		this.usuarios = new HashSet<Usuario>();
 	}
+	
+	
 	
 	/**
 	 * Metodo responsavel por adicionar Usuarios a lista de usuarios
@@ -107,13 +113,12 @@ public class Loja {
 	 */
 	public void vendeJogo(Jogo jogoVendido, String loginUsuario){
 		
-		
 		try{
 			
-			//Jogo copiaJogo = this.copiaJogo(jogoVendido);
-			//implementar a interface Clonable em jogo?? http://pt.stackoverflow.com/questions/60813/como-fazer-c%C3%B3pia-de-objetos-em-java
+			// Jogo copiaJogo = this.copiaJogo(jogoVendido);
+			// implementar a interface Clonable em jogo?? http://pt.stackoverflow.com/questions/60813/como-fazer-c%C3%B3pia-de-objetos-em-java
 			// usar factory???? http://www.devmedia.com.br/padrao-de-projeto-factory-method-em-java/26348
-			
+			// assumir que eu recebo um jogo ja copiado??? (por enquanto fica assim)
 			
 			Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
 			
@@ -129,13 +134,24 @@ public class Loja {
 			
 		}catch(Exception e){
 			
-			e.getMessage();
+			System.out.println(e.getMessage());
 			
 		}
 		
 	}
+
+	
+	public void vendeJogo(String nomeJogo, double precoJogo, String loginUsuario){
+		
+		
+		
+	}
 	
 	
+	/**
+	 * Metodo que imprime as informacoes de todos os usuarios
+	 * cadastrados.
+	 */
 	public void imprimeInfoUsuarios(){
 		
 		System.out.println("== Central P2-CG ==");
@@ -148,6 +164,69 @@ public class Loja {
 		
 	}
 	
+	
+	/**
+	 * Metodo que faz o upgrade de um usuario nao-veterano a veterano
+	 * caso o mesmo possua a quantidade minima de x2p para ser promovido
+	 * 
+	 * @param String - login do usuario a ser promovido
+	 */
+	public void upgrade(String loginUsuario){
+		
+		try{
+			
+			Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
+			
+			int x2p = usuarioEncontrado.getX2p();
+			
+			if(x2p < X2P_MIN_UPGRADE){
+				throw new LogicaDeNegociosExecption("x2p insuficiente para o upgrade");
+			}
+			
+			if(usuarioEncontrado instanceof UsuarioVeterano){
+				throw new LogicaDeNegociosExecption("Impossivel promover um usuario que ja eh veterano.");
+			}
+			
+			/*
+			 * Esse passo me soa muito estranho pois a Loja precisa conhecer
+			 * tudo que ha em usuario, ou seja, nao tem muita vantagem o usuario
+			 * estar encapsulado.
+			 */
+			
+			// gambiarra{
+			
+			String nome = usuarioEncontrado.getNome();
+			String login = usuarioEncontrado.getLogin();
+			HashSet<Jogo> jogos = usuarioEncontrado.getJogos();
+			double saldo = usuarioEncontrado.getSaldo();
+			
+			
+			Usuario novoVeterano = new UsuarioVeterano(nome, login);
+			
+			novoVeterano.setJogos(jogos);
+			novoVeterano.setSaldo(saldo);
+			novoVeterano.setX2p(x2p);
+			
+			// }
+			
+			//remove o usuario que era noob da lista
+			this.getUsuarios().remove(usuarioEncontrado);
+			
+			this.getUsuarios().add(novoVeterano);
+			
+		
+		}catch(LogicaDeNegociosExecption lne){
+			
+			System.out.println(lne.getMessage());
+			
+		}catch(StringInvalidaException sie){
+			
+			System.out.println(sie.getMessage());
+			
+		}	
+	}
+	
+	
 	/**
 	 * Metodo que busca Usuario na lista de usuarios pelo 
 	 * login do mesmo
@@ -158,7 +237,7 @@ public class Loja {
 	 * 
 	 * @throws LogicaDeNegociosExecption - caso o usuario nao seja encontrado
 	 */
-	private Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption , DadosInvalidosException{
+	private Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption , StringInvalidaException{
 		
 		this.validaLogin(loginUsuario);
 		
@@ -179,7 +258,6 @@ public class Loja {
 	
 
 	
-
 	private Jogo copiaJogo(Jogo jogo) throws DadosInvalidosException{
 		
 		validaJogo(jogo);
@@ -189,7 +267,6 @@ public class Loja {
 		return null;
 	}
 	
-
 	
 	private void validaUsuario(Usuario usuario)throws DadosInvalidosException{
 		if(usuario == null){
@@ -205,11 +282,12 @@ public class Loja {
 	}
 	
 	
-	private void validaLogin(String loginUsuario) throws DadosInvalidosException {
+	private void validaLogin(String loginUsuario) throws StringInvalidaException {
 		
 		if(loginUsuario == null || loginUsuario.trim().isEmpty()){
-			throw new DadosInvalidosException("Nao eh permitido login vazio ou nulo");
+			throw new StringInvalidaException("Nao eh permitido login vazio ou nulo");
 		}
+		
 		
 	}
 	
