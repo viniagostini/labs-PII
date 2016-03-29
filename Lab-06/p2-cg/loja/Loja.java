@@ -3,6 +3,10 @@ package loja;
 import java.util.HashSet;
 
 import jogo.Jogo;
+import jogo.JogoLuta;
+import jogo.JogoPlataforma;
+import jogo.JogoRPG;
+import jogo.TipoDeJogo;
 import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
@@ -141,10 +145,69 @@ public class Loja {
 	}
 
 	
-	public void vendeJogo(String nomeJogo, double precoJogo, String loginUsuario){
+	/**
+	 * Metodo que recebe as informacoes de um jogo a ser vendido, as
+	 * usa para criar um jogo e o vende ao usuario.
+	 * 
+	 * @param Stirng - nome do jogo
+	 * @param double - preco do jogo
+	 * @param TipoDeJogo - tipo do jogo
+	 * @param String - logindo usuario que ira comprar o jogo
+	 */
+	public void vendeJogo(String nomeJogo, double precoJogo, TipoDeJogo tipoJogo, String loginUsuario){
 		
+		/*
+		 * Nesse caso esta sendo vendido sempre um jogo sem jogabilidades ao usuario (errado ao meu ponto de vista).
+		 * 
+		 * Alem disso, a classe Loja ira conhecer os tipos especificos de Jogos, o que tira toda a graca do tipo 
+		 * generico polimorfico Jogo.
+		 * 
+		 * Talvez haja tambem um erro de creator, pois nao eh responsabilidade da loja criar jogos.
+		 */
 		
+		try{
+			
+			Jogo jogoVendido;
+			
+			switch (tipoJogo) {
+			case LUTA:
+				
+				jogoVendido = new JogoLuta(nomeJogo, precoJogo);
+				
+				break;
+			case RPG:
+				
+				jogoVendido = new JogoRPG(nomeJogo, precoJogo);
+				
+				break;
+			case PLATAFORMA:
+				
+				jogoVendido = new JogoPlataforma(nomeJogo, precoJogo);
+				
+				break;
+			default:
+				throw new LogicaDeNegociosExecption("Tipo de jogo invalido");
+			}
 		
+			this.vendeJogo(jogoVendido, loginUsuario);
+			
+		}catch(StringInvalidaException sie){
+			
+			System.out.println(sie.getMessage());
+			
+		}catch(ValorNumericoInvalidoException vne){
+			
+			System.out.println(vne.getMessage());
+			
+		}catch(LogicaDeNegociosExecption lne){
+			
+			System.out.println(lne.getMessage());
+			
+		}catch(Exception e){
+			
+			System.out.println(e.getMessage());
+			
+		}
 	}
 	
 	
@@ -257,7 +320,6 @@ public class Loja {
 	}
 	
 
-	
 	private Jogo copiaJogo(Jogo jogo) throws DadosInvalidosException{
 		
 		validaJogo(jogo);
@@ -290,6 +352,7 @@ public class Loja {
 		
 		
 	}
+	
 	
 	//getters e setters
 	public HashSet<Usuario> getUsuarios() {
