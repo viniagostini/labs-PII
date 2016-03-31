@@ -1,7 +1,8 @@
 package exceptions;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 /**
- * 
  * @author Vinicius A. Agostini
  *
  * Classe responsavel por encapsular todos os erros/exceptions relacionados a dados invalidos

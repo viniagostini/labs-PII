@@ -10,6 +10,8 @@ import exceptions.StringInvalidaException;
 import jogo.JogoLuta;
 import jogo.JogoPlataforma;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 public class UsuarioNoobTest {
 
 	public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lancado exception";

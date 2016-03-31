@@ -5,6 +5,8 @@ import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
 import jogo.Jogo;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 
 /**
  * Classe que herda comportamentos e estados de {@link usuario.Usuario}

@@ -14,6 +14,8 @@ import exceptions.ValorNumericoInvalidoException;
 import usuario.Usuario;
 import usuario.UsuarioVeterano;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 /**
  * Classe "facade"/Loja responsavel por gerenciar uma lista de usuarios
  * e as operacoes de venda de jogos, adicao de novos usuarios,

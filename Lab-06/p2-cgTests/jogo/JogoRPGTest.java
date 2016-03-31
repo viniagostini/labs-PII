@@ -8,6 +8,8 @@ import exceptions.DadosInvalidosException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 public class JogoRPGTest {
 
 	public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lancado exception";

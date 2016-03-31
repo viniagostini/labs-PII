@@ -11,6 +11,8 @@ import jogo.JogoRPG;
 import usuario.UsuarioNoob;
 import usuario.UsuarioVeterano;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
+
 public class LojaTest {
 
 	
