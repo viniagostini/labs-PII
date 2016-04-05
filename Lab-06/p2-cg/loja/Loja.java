@@ -11,6 +11,7 @@ import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
+import factory.JogoFactory;
 import usuario.Usuario;
 import usuario.UsuarioVeterano;
 
@@ -30,7 +31,8 @@ public class Loja {
 	public static final int X2P_MIN_UPGRADE = 1000;
 	
 	
-	private HashSet<Usuario> usuarios;	
+	private HashSet<Usuario> usuarios;
+	private JogoFactory fabricaDeJogos;
 	
 	
 	
@@ -42,6 +44,7 @@ public class Loja {
 	public Loja() {
 		
 		this.usuarios = new HashSet<Usuario>();
+		this.fabricaDeJogos = new JogoFactory();
 	}
 	
 	
@@ -169,27 +172,7 @@ public class Loja {
 		
 		try{
 			
-			Jogo jogoVendido;
-			
-			switch (tipoJogo) {
-			case LUTA:
-				
-				jogoVendido = new JogoLuta(nomeJogo, precoJogo);
-				
-				break;
-			case RPG:
-				
-				jogoVendido = new JogoRPG(nomeJogo, precoJogo);
-				
-				break;
-			case PLATAFORMA:
-				
-				jogoVendido = new JogoPlataforma(nomeJogo, precoJogo);
-				
-				break;
-			default:
-				throw new LogicaDeNegociosExecption("Tipo de jogo invalido");
-			}
+			Jogo jogoVendido = this.fabricaDeJogos.criaJogo(nomeJogo, precoJogo, tipoJogo);
 		
 			this.vendeJogo(jogoVendido, loginUsuario);
 			

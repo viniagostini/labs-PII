@@ -1,5 +1,6 @@
 package jogo;
 
+import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
@@ -31,7 +32,7 @@ public class JogoLuta extends Jogo{
 	 * 
 	 * @throws ValorNumericoInvalidoException - caso o preco seja negativo.
 	 */
-	public JogoLuta(String nome, double preco) throws StringInvalidaException , ValorNumericoInvalidoException {
+	public JogoLuta(String nome, double preco) throws DadosInvalidosException {
 		super(nome, preco);
 	}
 	

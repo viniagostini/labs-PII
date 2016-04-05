@@ -1,5 +1,6 @@
 package jogo;
 
+import exceptions.DadosInvalidosException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
@@ -27,7 +28,7 @@ public class JogoPlataforma extends Jogo{
 	 * 
 	 * @throws ValorNumericoInvalidoException - caso o preco seja negativo.
 	 */
-	public JogoPlataforma(String nome, double preco) throws Exception {
+	public JogoPlataforma(String nome, double preco) throws DadosInvalidosException {
 		super(nome, preco);
 	}
 
