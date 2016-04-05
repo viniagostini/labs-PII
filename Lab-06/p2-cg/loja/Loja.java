@@ -191,7 +191,6 @@ public class Loja {
 		}catch(Exception e){
 			
 			System.out.println(e.getMessage());
-			
 		}
 	}
 	
