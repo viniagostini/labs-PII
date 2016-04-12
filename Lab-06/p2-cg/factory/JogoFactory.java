@@ -9,7 +9,7 @@ import jogo.JogoRPG;
 import jogo.TipoDeJogo;
 
 /**
- * Classe cuja unica resposabilidade esta na criacao de jogos
+ * Classe cuja unica resposabilidade esta na criacao de Jogos
  * 
  * @author Vinicius A. Agostini
  */
@@ -21,9 +21,9 @@ public class JogoFactory {
 	 * e retorna uma referencia gererica do tipo Jogo apontando
 	 * para o mesmo.
 	 * 
-	 * @param nomeJogo
-	 * @param precoJogo
-	 * @param tipoJogo
+	 * @param String - Nome do jogo.
+	 * @param double - Preco do jogo.
+	 * @param TipoDeJogo - Tipo do jogo.
 	 * 
 	 * @return Jogo - A referencia para o jogo criado.
 	 * 
