@@ -42,6 +42,7 @@ public class JogoFactoryTest {
 			
 			//verificando se o tipo do jogo foi criado corretamente
 			
+			@SuppressWarnings("unused")
 			JogoLuta mk = (JogoLuta) mortalKombat;
 			
 			

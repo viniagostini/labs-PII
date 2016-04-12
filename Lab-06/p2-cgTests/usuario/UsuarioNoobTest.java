@@ -7,7 +7,6 @@ import org.junit.Test;
 import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
-import jogo.JogoLuta;
 import jogo.JogoPlataforma;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
