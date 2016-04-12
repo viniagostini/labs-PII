@@ -23,8 +23,8 @@ public class StatusNoob implements StatusDeUsuario{
 	public static final int PUNICAO_COMPETITIVO = 20;
 	public static final int PUNICAO_COOPERATIVO = 50;
 	
-	public static final int RECONPENSA_OFFLINE = 30;
-	public static final int RECONPENSA_MULTIPLAYER = 10;
+	public static final int RECOMPENSA_OFFLINE = 30;
+	public static final int RECOMPENSA_MULTIPLAYER = 10;
 	
 
 	@Override
@@ -65,7 +65,7 @@ public class StatusNoob implements StatusDeUsuario{
 
 
 	@Override
-	public int calculaReconpensa(Jogabilidade jogabilidade) throws DadosInvalidosException{
+	public int calculaRecompensa(Jogabilidade jogabilidade) throws DadosInvalidosException{
 		
 		this.validaJogabilidade(jogabilidade);
 		
@@ -73,11 +73,11 @@ public class StatusNoob implements StatusDeUsuario{
 		
 		case MULTIPLAYER:
 			
-			return RECONPENSA_MULTIPLAYER;
+			return RECOMPENSA_MULTIPLAYER;
 			
 		case OFFLINE:
 			
-			return RECONPENSA_OFFLINE;
+			return RECOMPENSA_OFFLINE;
 			
 		default:
 			return 0;

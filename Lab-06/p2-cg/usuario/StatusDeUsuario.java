@@ -10,7 +10,7 @@ public interface StatusDeUsuario {
 	
 	public int calculaX2PCompra(double precoJogo) throws P2CGException;
 	
-	public int calculaReconpensa(Jogabilidade jogabilidade)throws P2CGException;
+	public int calculaRecompensa(Jogabilidade jogabilidade)throws P2CGException;
 	
 	public int calculaPunicao(Jogabilidade jogabilidade)throws P2CGException;
 	

@@ -7,6 +7,8 @@ import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
+import factory.StatusDeUsuarioFactory;
+import jogo.Jogabilidade;
 import jogo.Jogo;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
@@ -19,29 +21,34 @@ import jogo.Jogo;
  */
 public class Usuario {
 
+	public static final int MIN_X2P_VETERANO = 1001;
+	
 	private String nome;
 	private String login;
 	private HashSet<Jogo> jogos;
 	private double saldo;
 	private int x2p;
 	private StatusDeUsuario statusDoUsuario; 
+	private StatusDeUsuarioFactory fabricaDeStatus;
 	
 	/**
 	 * Construtor
 	 * @param String - nome do usuario
 	 * @throws StringInvalidaException - Caso seja passado um nome
 	 * vazio ou nulo.
+	 * @throws LogicaDeNegociosExecption 
 	 */
-	public Usuario(String nome, String login)throws StringInvalidaException{
+	public Usuario(String nome, String login)throws StringInvalidaException, LogicaDeNegociosExecption{
 		
 		validaConstrutor(nome, login);
 		
 		this.nome = nome;
 		this.login = login;
 		this.jogos = new HashSet<Jogo>();
+		this.fabricaDeStatus = new StatusDeUsuarioFactory();
 		
 		// todo usuario eh criado como noob
-		this.statusDoUsuario = new StatusNoob();
+		this.statusDoUsuario = fabricaDeStatus.criaStatusDeUsuario(TipoDeUsuario.NOOB);
 	}
 	
 	/**
@@ -81,26 +88,79 @@ public class Usuario {
 		
 	}
 	
-	
 	/**
-	 * Metodo que diz respeito a um comportamento
-	 * essencial a todo usuario: registrar suas jogadas.
-	 * 
-	 * @param String - Nome do jogo
-	 * @param int - score da partida realizada pelo usuario
-	 * @param boolean - o usuario zerou ou nao o jogo nessa partida
-	 * 
-	 * @throws P2CGException
+	 * Metodo que muda (ou nao) o status do usuario baseado
+	 * no seu x2p.
+	 * @throws LogicaDeNegociosExecption
 	 */
-	public void registraJogada(String nomeDoJogo, int score, boolean zerou) throws P2CGException {
+	public void verificaStatusUsuario() throws LogicaDeNegociosExecption{
+		if(this.getX2p()< MIN_X2P_VETERANO){
+			this.statusDoUsuario = fabricaDeStatus.criaStatusDeUsuario(TipoDeUsuario.NOOB);
+		}else{
+			this.statusDoUsuario = fabricaDeStatus.criaStatusDeUsuario(TipoDeUsuario.VETERANO);
+		}
+	}
+	
+	public void recompensaJogada(String nomeDoJogo, int score, boolean zerou) throws P2CGException{
 		
 		this.validaRegistaJogada(nomeDoJogo, score);
 		
 		Jogo jogoJogado = this.buscaJogo(nomeDoJogo);
 		
-		int x2p = jogoJogado.registraJogada(score, zerou);
+		//chamada polimorfica
+		int x2pJogo = jogoJogado.registraJogada(score, zerou);
 		
-		this.incrementaX2p(x2p);
+		int x2pRecompensa = this.calculaRecompensa(jogoJogado);
+		
+		int x2pTotal = x2pJogo + x2pRecompensa;
+		
+		this.incrementaX2p(x2pTotal);
+		
+	}
+	
+	public void puneJogada(String nomeDoJogo, int score, boolean zerou) throws P2CGException{
+		
+		this.validaRegistaJogada(nomeDoJogo, score);
+		
+		Jogo jogoJogado = this.buscaJogo(nomeDoJogo);
+		
+		//chamada polimorfica
+		int x2pJogo = jogoJogado.registraJogada(score, zerou);
+		
+		int x2pPunicao = this.calculaPunicao(jogoJogado);
+		
+		this.incrementaX2p(x2pJogo);
+		
+		this.abateX2p(x2pPunicao);
+		
+	}
+	
+	private int calculaRecompensa(Jogo jogoJogado) throws P2CGException{
+		
+		HashSet<Jogabilidade> jogabilidades =  jogoJogado.getJogabilidades();
+		
+		int x2pRecompensa = 0;
+		
+		for(Jogabilidade j : jogabilidades){
+			//chamada polimorfica
+			x2pRecompensa += this.statusDoUsuario.calculaRecompensa(j);	
+		}
+		
+		return x2pRecompensa;
+	}
+	
+	private int calculaPunicao(Jogo jogoJogado) throws P2CGException{
+		
+		HashSet<Jogabilidade> jogabilidades =  jogoJogado.getJogabilidades();
+		
+		int x2pPunicao = 0;
+		
+		for(Jogabilidade j : jogabilidades){
+			//chamada polimorfica
+			x2pPunicao += this.statusDoUsuario.calculaPunicao(j);	
+		}
+		
+		return x2pPunicao;
 	}
 	
 	/**
@@ -128,7 +188,7 @@ public class Usuario {
 	 * 
 	 * @throws ValorNumericoInvalidoException - caso o valor passado seja negativo
 	 */
-	protected boolean abateSaldo(double valor)throws ValorNumericoInvalidoException{
+	private boolean abateSaldo(double valor)throws ValorNumericoInvalidoException{
 		
 		this.validaValorSaldo(valor);
 		
@@ -149,12 +209,14 @@ public class Usuario {
 	
 	/**
 	 * Metodo que recebe um valor de x2p e incrementa
-	 * no x2p total do usuario
+	 * no x2p total do usuario. Alem disso, verifica se
+	 * hove alguma alteracao no status do usuario.
 	 * 
 	 * @param int - valor de x2p a ser incrementado
 	 * @throws ValorNumericoInvalidoException - caso o valor de x2p passado seja negativo
+	 * @throws LogicaDeNegociosExecption 
 	 */
-	protected void incrementaX2p(int x2p)throws ValorNumericoInvalidoException{
+	private void incrementaX2p(int x2p)throws ValorNumericoInvalidoException, LogicaDeNegociosExecption{
 		
 		this.validaValorX2p(x2p);
 		
@@ -162,8 +224,30 @@ public class Usuario {
 		int novoX2p = x2pAtual + x2p;
 		
 		this.setX2p(novoX2p);
+		
+		this.verificaStatusUsuario();
 	}
 	
+	/**
+	 * Metodo que recebe um valor de x2p e decrementa
+	 * no x2p total do usuario. Alem disso, verifica se
+	 * hove alguma alteracao no status do usuario.
+	 * 
+	 * @param int - valor de x2p a ser incrementado
+	 * @throws ValorNumericoInvalidoException - caso o valor de x2p passado seja negativo
+	 * @throws LogicaDeNegociosExecption 
+	 */
+	private void abateX2p(int x2p)throws ValorNumericoInvalidoException, LogicaDeNegociosExecption{
+		
+		this.validaValorX2p(x2p);
+		
+		int x2pAtual = this.getX2p();
+		int novoX2p = x2pAtual - x2p;
+		
+		this.setX2p(novoX2p);
+		
+		this.verificaStatusUsuario();
+	}
 	
 	/**
 	 * Busca um jogo na lista de jogos de usuario a partir
@@ -270,7 +354,6 @@ public class Usuario {
 	}
 	
 	//metodos triviais
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -23,8 +23,8 @@ public class StatusVeterano implements StatusDeUsuario {
 	public static final int PUNICAO_OFFLINE = 20;
 	public static final int PUNICAO_COMPETITIVO = 20;
 	
-	public static final int RECONPENSA_ONLINE = 10;
-	public static final int RECONPENSA_COOPERATIVO = 20;
+	public static final int RECOMPENSA_ONLINE = 10;
+	public static final int RECOMPENSA_COOPERATIVO = 20;
 	
 
 	@Override
@@ -61,7 +61,7 @@ public class StatusVeterano implements StatusDeUsuario {
 
 
 	@Override
-	public int calculaReconpensa(Jogabilidade jogabilidade) throws DadosInvalidosException{
+	public int calculaRecompensa(Jogabilidade jogabilidade) throws DadosInvalidosException{
 		
 		this.validaJogabilidade(jogabilidade);
 		
@@ -69,11 +69,11 @@ public class StatusVeterano implements StatusDeUsuario {
 		
 		case COOPERATIVO:
 			
-			return RECONPENSA_COOPERATIVO;
+			return RECOMPENSA_COOPERATIVO;
 			
 		case ONLINE:
 			
-			return RECONPENSA_ONLINE;
+			return RECOMPENSA_ONLINE;
 			
 		default:
 			return 0;

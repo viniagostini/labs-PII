@@ -13,6 +13,7 @@ import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 import factory.JogoFactory;
+import factory.StatusDeUsuarioFactory;
 import factory.UsuarioFactory;
 import usuario.TipoDeUsuario;
 import usuario.Usuario;
@@ -39,7 +40,6 @@ public class LojaController {
 	private UsuarioFactory fabricaDeUsuarios;
 	
 	
-	
 	/**
 	 * Contrutor sem parametros que inicializa
 	 * um HashSet de Usuarios
@@ -49,6 +49,7 @@ public class LojaController {
 		
 		this.usuarios = new HashSet<Usuario>();
 		this.fabricaDeJogos = new JogoFactory();
+		
 		this.fabricaDeUsuarios = new UsuarioFactory();
 	}
 	
@@ -66,7 +67,7 @@ public class LojaController {
 		
 			this.validaUsuario(nomeUsuario, loginUsuario);
 			
-			Usuario novoUsuario = this.fabricaDeUsuarios.criaUsuario(nomeUsuario, loginUsuario, TipoDeUsuario.NOOB);
+			Usuario novoUsuario = this.fabricaDeUsuarios.criaUsuario(nomeUsuario, loginUsuario);
 			
 			return this.getUsuarios().add(novoUsuario);
 	}
