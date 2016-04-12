@@ -2,27 +2,24 @@ package loja;
 
 import java.util.HashSet;
 
-import jogo.Jogo;
-import jogo.JogoLuta;
-import jogo.JogoPlataforma;
-import jogo.JogoRPG;
-import jogo.TipoDeJogo;
 import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
+
 import factory.JogoFactory;
-import factory.StatusDeUsuarioFactory;
 import factory.UsuarioFactory;
-import usuario.TipoDeUsuario;
+
+import jogo.Jogo;
+import jogo.TipoDeJogo;
+
 import usuario.Usuario;
-import usuario.StatusVeterano;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
 /**
- * Classe "facade"/Loja responsavel por gerenciar uma lista de usuarios
+ * Classe Controller responsavel por gerenciar uma lista de usuarios
  * e as operacoes de venda de jogos, adicao de novos usuarios,
  * adicao de saldo dos usuarios e impressao das informacoes de usuario.
  * 
@@ -46,13 +43,10 @@ public class LojaController {
 	 * @see Usuario
 	 */
 	public LojaController() {
-		
 		this.usuarios = new HashSet<Usuario>();
 		this.fabricaDeJogos = new JogoFactory();
-		
 		this.fabricaDeUsuarios = new UsuarioFactory();
 	}
-	
 	
 	
 	/**
@@ -83,12 +77,10 @@ public class LojaController {
 	 * @throws StringInvalidaException 
 	 * @throws ValorNumericoInvalidoException 
 	 */
-	public void adicionaDinheiro(String loginUsuario, double qtdDinheiro) throws StringInvalidaException, LogicaDeNegociosExecption, ValorNumericoInvalidoException{
+	public void adicionaDinheiro(String loginUsuario, double qtdDinheiro) throws P2CGException{
 		
-			
 		Usuario usuarioAtual = this.buscaUsuario(loginUsuario);	
 		usuarioAtual.incrementaSaldo(qtdDinheiro);
-		
 	}
 	
 	
@@ -121,7 +113,6 @@ public class LojaController {
 	 * @throws P2CGException 
 	 */
 	public void vendeJogo(String nomeJogo, double precoJogo, TipoDeJogo tipoJogo, String loginUsuario) throws P2CGException{
-		
 		
 		Jogo jogoVendido = this.fabricaDeJogos.criaJogo(nomeJogo, precoJogo, tipoJogo);
 		
@@ -177,9 +168,7 @@ public class LojaController {
 	}
 	
 
-	
-	// metodos de validacao
-	
+	// metodos de validacao	
 	private void validaUsuario(String nomeUsuario, String loginUsuario)throws DadosInvalidosException{
 		if(nomeUsuario == null || nomeUsuario.trim().isEmpty()){
 			throw new DadosInvalidosException("Usuarios com nome vazio ou nulo nao sao permitidos.");
@@ -190,7 +179,6 @@ public class LojaController {
 		}
 	}
 
-	
 	private void validaLogin(String loginUsuario) throws StringInvalidaException {
 		
 		if(loginUsuario == null || loginUsuario.trim().isEmpty()){

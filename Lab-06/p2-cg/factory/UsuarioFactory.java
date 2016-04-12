@@ -25,7 +25,7 @@ public class UsuarioFactory {
 	 * @throws DadosInvalidosException - Caso algum dado invalido seja inserido.
 	 * @throws LogicaDeNegociosExecption - Caso o tipo de usuario seja invalido.
 	 */
-	public Usuario criaUsuario(String nomeUsuario, String loginUsuario)throws StringInvalidaException{
+	public Usuario criaUsuario(String nomeUsuario, String loginUsuario)throws StringInvalidaException, LogicaDeNegociosExecption{
 		
 		return new Usuario(nomeUsuario, loginUsuario);
 	}
