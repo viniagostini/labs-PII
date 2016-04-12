@@ -1,5 +1,6 @@
 package usuario;
 
+import jogo.Jogabilidade;
 import exceptions.P2CGException;
 
 public interface TipoDeUsuarioIF {
@@ -9,9 +10,9 @@ public interface TipoDeUsuarioIF {
 	
 	public int calculaX2PCompra(double precoJogo) throws P2CGException;
 	
-	public int recompensarJogada(String nomeJogo,int scoreObtido,boolean zerou);
+	public int calculaReconpensa(Jogabilidade jogabilidade)throws P2CGException;
 	
-	public int punirJogada(String nomeJogo,int scoreObtido,boolean zerou);
+	public int calculaPunicao(Jogabilidade jogabilidade)throws P2CGException;
 	
 	
 }
