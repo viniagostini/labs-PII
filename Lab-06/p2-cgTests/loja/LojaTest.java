@@ -9,7 +9,7 @@ import jogo.JogoLuta;
 import jogo.JogoPlataforma;
 import jogo.JogoRPG;
 import usuario.UsuarioNoob;
-import usuario.UsuarioVeterano;
+import usuario.StatusVeterano;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
@@ -27,9 +27,9 @@ public class LojaTest {
 			UsuarioNoob usuario3 = new UsuarioNoob("Noob3", "N3");
 			UsuarioNoob usuario4 = new UsuarioNoob("Noob4", "N4"); // nao sera inserido
 			
-			UsuarioVeterano usuario5 = new UsuarioVeterano("Veterano1", "V1");
-			UsuarioVeterano usuario6 = new UsuarioVeterano("Veterano2", "V2");
-			UsuarioVeterano usuario7 = new UsuarioVeterano("Veterano3", "V3");
+			StatusVeterano usuario5 = new StatusVeterano("Veterano1", "V1");
+			StatusVeterano usuario6 = new StatusVeterano("Veterano2", "V2");
+			StatusVeterano usuario7 = new StatusVeterano("Veterano3", "V3");
 
 			loja.adicionaUsuario(usuario1);
 			loja.adicionaUsuario(usuario2);
@@ -83,7 +83,7 @@ public class LojaTest {
 			LojaController loja = new LojaController();
 			
 			UsuarioNoob usuario1 = new UsuarioNoob("Noob1", "N1");			
-			UsuarioVeterano usuario5 = new UsuarioVeterano("Veterano1", "V1");
+			StatusVeterano usuario5 = new StatusVeterano("Veterano1", "V1");
 
 			loja.adicionaUsuario(usuario1);
 			loja.adicionaUsuario(usuario5);
@@ -119,7 +119,7 @@ public class LojaTest {
 			LojaController loja = new LojaController();
 			
 			UsuarioNoob usuario1 = new UsuarioNoob("Noob1", "N1");			
-			UsuarioVeterano usuario5 = new UsuarioVeterano("Veterano1", "V1");
+			StatusVeterano usuario5 = new StatusVeterano("Veterano1", "V1");
 
 			loja.adicionaUsuario(usuario1);
 			loja.adicionaUsuario(usuario5);

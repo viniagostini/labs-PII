@@ -3,7 +3,7 @@ package usuario;
 import jogo.Jogabilidade;
 import exceptions.P2CGException;
 
-public interface TipoDeUsuarioIF {
+public interface StatusDeUsuario {
 
 
 	public double calculaPrecoCompra(double precoJogo) throws P2CGException;

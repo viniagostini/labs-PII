@@ -14,7 +14,7 @@ import exceptions.P2CGException;
  * 
  * @author Vinicius A. Agostini
  */
-public class Noob implements TipoDeUsuarioIF{
+public class StatusNoob implements StatusDeUsuario{
 
 	public static final double DESCONTO =  0.1; //10% de desconto
 	public static final int MULTIPLICADOR_DE_X2P =  10;
@@ -41,9 +41,9 @@ public class Noob implements TipoDeUsuarioIF{
 
 
 	@Override
-	public int calculaPunicao (Jogabilidade jogabilidade) throws P2CGException {
+	public int calculaPunicao (Jogabilidade jogabilidade) throws DadosInvalidosException {
 		
-		this.verificaJogabilidade(jogabilidade);
+		this.validaJogabilidade(jogabilidade);
 		
 		switch (jogabilidade){
 		
@@ -60,31 +60,34 @@ public class Noob implements TipoDeUsuarioIF{
 				return PUNICAO_COOPERATIVO;
 				
 			default:
-				throw new LogicaDeNegociosExecption("Nao existe punicao para esse tipo de jogada.");
+				return 0;
 		}
 	}
 
 
 	@Override
-	public int calculaReconpensa(Jogabilidade jogabilidade) throws LogicaDeNegociosExecption{
+	public int calculaReconpensa(Jogabilidade jogabilidade) throws DadosInvalidosException{
+		
+		this.validaJogabilidade(jogabilidade);
+		
 		switch (jogabilidade){
 		
-		case ONLINE:
+		case MULTIPLAYER:
 			
-			return PUNICAO_ONLINE;
+			return RECONPENSA_MULTIPLAYER;
 			
-		case COMPETITIVO:
+		case OFFLINE:
 			
-			return PUNICAO_COMPETITIVO;
+			return RECONPENSA_OFFLINE;
 			
 		default:
-			throw new LogicaDeNegociosExecption("Nao existe punicao para esse tipo de jogada.");
+			return 0;
 		}
 	}
 
 
-	// metodos de verificacao
-	private void verificaJogabilidade(Jogabilidade jogabilidade) throws DadosInvalidosException{
+	// metodos de validacao
+	private void validaJogabilidade(Jogabilidade jogabilidade) throws DadosInvalidosException{
 		if(jogabilidade == null){
 			throw new DadosInvalidosException("Nao eh permitido jogabilidade nula.");
 		}

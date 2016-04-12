@@ -16,7 +16,7 @@ import factory.JogoFactory;
 import factory.UsuarioFactory;
 import usuario.TipoDeUsuario;
 import usuario.Usuario;
-import usuario.UsuarioVeterano;
+import usuario.StatusVeterano;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 

@@ -23,7 +23,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		//verifica o estado inicial do objeto
 		try{
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			
 			String nome = vinicius.getNome();
 			String login = vinicius.getLogin();
@@ -44,7 +44,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//verifica a insercao de nome vazio
 		try{
 			@SuppressWarnings("unused")
-			UsuarioVeterano vinicius = new UsuarioVeterano("", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("", "vinicius.agostini");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -62,7 +62,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//verfica a insercao de login vazio
 		try{
 			@SuppressWarnings("unused")
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -84,7 +84,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		try{
 			
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(80);
@@ -112,7 +112,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste adicionando um jogo nulo
 		try{
 			
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			
 			vinicius.incrementaSaldo(100);
 			
@@ -135,7 +135,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste comprando duas vezes o mesmo jogo
 		try{
 			
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			JogoPlataforma outroMario = new JogoPlataforma("Mario", 100);
 			
@@ -163,7 +163,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste tentando comprar jogo com saldo insuficiente
 		try{
 			
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(79.90);
@@ -195,7 +195,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		try{
 			
-			UsuarioVeterano vinicius = new UsuarioVeterano("Vinicius", "vinicius.agostini");
+			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(80);

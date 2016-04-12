@@ -24,7 +24,7 @@ public class Usuario {
 	private HashSet<Jogo> jogos;
 	private double saldo;
 	private int x2p;
-	private TipoDeUsuarioIF statusDoUsuario; 
+	private StatusDeUsuario statusDoUsuario; 
 	
 	/**
 	 * Construtor
@@ -39,7 +39,9 @@ public class Usuario {
 		this.nome = nome;
 		this.login = login;
 		this.jogos = new HashSet<Jogo>();
-		this.statusDoUsuario 
+		
+		// todo usuario eh criado como noob
+		this.statusDoUsuario = new StatusNoob();
 	}
 	
 	/**
