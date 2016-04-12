@@ -9,6 +9,7 @@ import jogo.JogoRPG;
 import jogo.TipoDeJogo;
 import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
+import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 import factory.JogoFactory;
@@ -26,7 +27,7 @@ import usuario.UsuarioVeterano;
  */
 
 
-public class Loja {
+public class LojaController {
 
 	public static final int X2P_MIN_UPGRADE = 1000;
 	
@@ -41,7 +42,7 @@ public class Loja {
 	 * um HashSet de Usuarios
 	 * @see Usuario
 	 */
-	public Loja() {
+	public LojaController() {
 		
 		this.usuarios = new HashSet<Usuario>();
 		this.fabricaDeJogos = new JogoFactory();
@@ -56,27 +57,13 @@ public class Loja {
 	 * @param Usuario - Usuarios a ser adicionado
 	 * 
 	 * @return boolean - o usuario foi ou nao adicionado
+	 * @throws DadosInvalidosException 
 	 */
-	public boolean adicionaUsuario(Usuario usuario){
+	public boolean adicionaUsuario(Usuario usuario) throws DadosInvalidosException{
 		
-		try{
-			
 			this.validaUsuario(usuario);
 			
 			return this.getUsuarios().add(usuario);
-			
-		}catch(DadosInvalidosException die){
-			
-			System.out.println(die.getMessage());
-			
-		}catch(Exception e){
-			
-			System.out.println(e.getMessage());
-			
-		}
-		
-		return false;
-		
 	}
 	
 	
@@ -86,67 +73,34 @@ public class Loja {
 	 * 
 	 * @param String - login do usuario que vai receber o dinheiro
 	 * @param double - qtd de dinheiro que o usuario vai receber
+	 * @throws LogicaDeNegociosExecption 
+	 * @throws StringInvalidaException 
+	 * @throws ValorNumericoInvalidoException 
 	 */
-	public void adicionaDinheiro(String loginUsuario, double qtdDinheiro){
+	public void adicionaDinheiro(String loginUsuario, double qtdDinheiro) throws StringInvalidaException, LogicaDeNegociosExecption, ValorNumericoInvalidoException{
 		
-		try{
 			
-			Usuario usuarioAtual = this.buscaUsuario(loginUsuario);
-			
-			usuarioAtual.incrementaSaldo(qtdDinheiro);
-			
-		}catch(LogicaDeNegociosExecption lne){
-			
-			System.out.println(lne.getMessage());
-			
-		}catch(ValorNumericoInvalidoException vne){
-			
-			System.out.println(vne.getMessage());
-			
-		}catch(Exception e){
-			
-			System.out.println(e.getMessage());
-			
-		}
+		Usuario usuarioAtual = this.buscaUsuario(loginUsuario);	
+		usuarioAtual.incrementaSaldo(qtdDinheiro);
+		
 	}
 	
 	
 	
 	/**
-	 * Metodo que recebe a copia de um jogo (sera?) e vende a um usuario
+	 * Metodo privado que recebe a copia do jogo que sera vendido e vende a um usuario
 	 * especificado por seu login.
 	 * 
 	 * @param Jogo - jogo a ser vendido
 	 * 
 	 * @param String - login do usuario
+	 * @throws P2CGException 
 	 */
-	public void vendeJogo(Jogo jogoVendido, String loginUsuario){
+	private void realizaVenda(Jogo jogoVendido, String loginUsuario) throws P2CGException{
 		
-		try{
+		Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
 			
-			// Jogo copiaJogo = this.copiaJogo(jogoVendido);
-			// implementar a interface Clonable em jogo?? http://pt.stackoverflow.com/questions/60813/como-fazer-c%C3%B3pia-de-objetos-em-java
-			// usar factory???? http://www.devmedia.com.br/padrao-de-projeto-factory-method-em-java/26348
-			// assumir que eu recebo um jogo ja copiado??? (por enquanto fica assim)
-			
-			Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
-			
-			usuarioEncontrado.realizaCompra(jogoVendido);
-			
-		}catch(DadosInvalidosException die){
-			
-			System.out.println(die.getMessage());
-			
-		}catch(LogicaDeNegociosExecption lne){
-			
-			System.out.println(lne.getMessage());
-			
-		}catch(Exception e){
-			
-			System.out.println(e.getMessage());
-			
-		}
-		
+		usuarioEncontrado.realizaCompra(jogoVendido);
 	}
 
 	
@@ -158,40 +112,15 @@ public class Loja {
 	 * @param double - preco do jogo
 	 * @param TipoDeJogo - tipo do jogo
 	 * @param String - logindo usuario que ira comprar o jogo
+	 * @throws P2CGException 
 	 */
-	public void vendeJogo(String nomeJogo, double precoJogo, TipoDeJogo tipoJogo, String loginUsuario){
+	public void vendeJogo(String nomeJogo, double precoJogo, TipoDeJogo tipoJogo, String loginUsuario) throws P2CGException{
 		
-		/*
-		 * Nesse caso esta sendo vendido sempre um jogo sem jogabilidades ao usuario (errado ao meu ponto de vista).
-		 * 
-		 * Alem disso, a classe Loja ira conhecer os tipos especificos de Jogos, o que tira toda a graca do tipo 
-		 * generico polimorfico Jogo.
-		 * 
-		 * Talvez haja tambem um erro de creator, pois nao eh responsabilidade da loja criar jogos.
-		 */
 		
-		try{
-			
-			Jogo jogoVendido = this.fabricaDeJogos.criaJogo(nomeJogo, precoJogo, tipoJogo);
+		Jogo jogoVendido = this.fabricaDeJogos.criaJogo(nomeJogo, precoJogo, tipoJogo);
 		
-			this.vendeJogo(jogoVendido, loginUsuario);
-			
-		}catch(StringInvalidaException sie){
-			
-			System.out.println(sie.getMessage());
-			
-		}catch(ValorNumericoInvalidoException vne){
-			
-			System.out.println(vne.getMessage());
-			
-		}catch(LogicaDeNegociosExecption lne){
-			
-			System.out.println(lne.getMessage());
-			
-		}catch(Exception e){
-			
-			System.out.println(e.getMessage());
-		}
+		this.realizaVenda(jogoVendido, loginUsuario);
+		
 	}
 	
 	
@@ -199,15 +128,19 @@ public class Loja {
 	 * Metodo que imprime as informacoes de todos os usuarios
 	 * cadastrados.
 	 */
-	public void imprimeInfoUsuarios(){
+	public String getInfoUsuarios(){
 		
-		System.out.println("== Central P2-CG ==");
+		String info = "";
+		
+		info += "== Central P2-CG ==";
 		
 		for(Usuario usuarioAtual : this.getUsuarios()){
 			
-			System.out.println(usuarioAtual);
+			info += usuarioAtual.toString();
 			
 		}
+		
+		return info;
 		
 	}
 	
@@ -304,14 +237,7 @@ public class Loja {
 	}
 	
 
-	private Jogo copiaJogo(Jogo jogo) throws DadosInvalidosException{
-		
-		validaJogo(jogo);
-		
-		//nao posso instanciar um novo jogo
-		
-		return null;
-	}
+	
 	
 	
 	private void validaUsuario(Usuario usuario)throws DadosInvalidosException{

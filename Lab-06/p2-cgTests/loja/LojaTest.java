@@ -20,7 +20,7 @@ public class LojaTest {
 	@Test
 	public void testAdicionaUsuario() {
 		try {
-			Loja loja = new Loja();
+			LojaController loja = new LojaController();
 			
 			UsuarioNoob usuario1 = new UsuarioNoob("Noob1", "N1");
 			UsuarioNoob usuario2 = new UsuarioNoob("Noob2", "N2");
@@ -80,7 +80,7 @@ public class LojaTest {
 	@Test
 	public void testAdicionaDinheiro() {
 		try {
-			Loja loja = new Loja();
+			LojaController loja = new LojaController();
 			
 			UsuarioNoob usuario1 = new UsuarioNoob("Noob1", "N1");			
 			UsuarioVeterano usuario5 = new UsuarioVeterano("Veterano1", "V1");
@@ -116,7 +116,7 @@ public class LojaTest {
 	@Test
 	public void testVendeJogo() {
 		try {
-			Loja loja = new Loja();
+			LojaController loja = new LojaController();
 			
 			UsuarioNoob usuario1 = new UsuarioNoob("Noob1", "N1");			
 			UsuarioVeterano usuario5 = new UsuarioVeterano("Veterano1", "V1");

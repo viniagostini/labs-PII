@@ -50,7 +50,7 @@ public abstract class Usuario {
 	 * @throws Exception - cabe as filhas dessa classe
 	 * definirem e tratarem suas proprias exception
 	 */
-	public abstract void realizaCompra(Jogo novoJogo)throws Exception;
+	public abstract void realizaCompra(Jogo novoJogo)throws P2CGException;
 	
 	
 	/**
