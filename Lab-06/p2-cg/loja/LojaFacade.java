@@ -4,9 +4,9 @@ import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
-import jogo.Jogo;
+
 import jogo.TipoDeJogo;
-import usuario.Usuario;
+import usuario.TipoDeUsuario;
 
 public class LojaFacade {
 
@@ -18,15 +18,19 @@ public class LojaFacade {
 	}
 
 	
-	public boolean adicionaUsuario(Usuario usuario) {
+	public boolean cadastrarUsuario(String nomeUsuario, String loginUsuario, TipoDeUsuario tipoUsuario) {
 		
 		try{
 
-			return lojaController.adicionaUsuario(usuario);
+			return lojaController.cadastrarUsuario(nomeUsuario, loginUsuario);
 			
 		}catch(DadosInvalidosException die){
 			
 			System.out.println(die.getMessage());
+			
+		}catch(LogicaDeNegociosExecption lne){
+			
+			System.out.println(lne.getMessage());
 			
 		}catch(Exception e){
 			
@@ -34,7 +38,7 @@ public class LojaFacade {
 			
 		}
 		
-		return false;
+			return false;
 	}
 
 	
@@ -88,7 +92,7 @@ public class LojaFacade {
 	
 	public void imprimeInfoUsuarios() {
 		
-		System.out.println(lojaController.getInfoUsuarios());
+		System.out.println(lojaController);
 		
 	}
 	

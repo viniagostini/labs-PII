@@ -13,6 +13,8 @@ import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 import factory.JogoFactory;
+import factory.UsuarioFactory;
+import usuario.TipoDeUsuario;
 import usuario.Usuario;
 import usuario.UsuarioVeterano;
 
@@ -34,6 +36,7 @@ public class LojaController {
 	
 	private HashSet<Usuario> usuarios;
 	private JogoFactory fabricaDeJogos;
+	private UsuarioFactory fabricaDeUsuarios;
 	
 	
 	
@@ -46,24 +49,26 @@ public class LojaController {
 		
 		this.usuarios = new HashSet<Usuario>();
 		this.fabricaDeJogos = new JogoFactory();
+		this.fabricaDeUsuarios = new UsuarioFactory();
 	}
 	
 	
 	
 	/**
-	 * Metodo responsavel por adicionar Usuarios a lista de usuarios
-	 * e tratar os possiveis erros.
+	 * Metodo responsavel por criar um usuario noob e adiciona-lo a lista de usuarios.
 	 * 
 	 * @param Usuario - Usuarios a ser adicionado
 	 * 
 	 * @return boolean - o usuario foi ou nao adicionado
 	 * @throws DadosInvalidosException 
 	 */
-	public boolean adicionaUsuario(Usuario usuario) throws DadosInvalidosException{
+	public boolean cadastrarUsuario(String nomeUsuario, String loginUsuario) throws P2CGException{
 		
-			this.validaUsuario(usuario);
+			this.validaUsuario(nomeUsuario, loginUsuario);
 			
-			return this.getUsuarios().add(usuario);
+			Usuario novoUsuario = this.fabricaDeUsuarios.criaUsuario(nomeUsuario, loginUsuario, TipoDeUsuario.NOOB);
+			
+			return this.getUsuarios().add(novoUsuario);
 	}
 	
 	
@@ -124,11 +129,7 @@ public class LojaController {
 	}
 	
 	
-	/**
-	 * Metodo que imprime as informacoes de todos os usuarios
-	 * cadastrados.
-	 */
-	public String getInfoUsuarios(){
+	public String toString(){
 		
 		String info = "";
 		
@@ -142,68 +143,6 @@ public class LojaController {
 		
 		return info;
 		
-	}
-	
-	
-	/**
-	 * Metodo que faz o upgrade de um usuario nao-veterano a veterano
-	 * caso o mesmo possua a quantidade minima de x2p para ser promovido
-	 * 
-	 * @param String - login do usuario a ser promovido
-	 */
-	public void upgrade(String loginUsuario){
-		
-		try{
-			
-			Usuario usuarioEncontrado = this.buscaUsuario(loginUsuario);
-			
-			int x2p = usuarioEncontrado.getX2p();
-			
-			if(x2p < X2P_MIN_UPGRADE){
-				throw new LogicaDeNegociosExecption("x2p insuficiente para o upgrade");
-			}
-			
-			if(usuarioEncontrado instanceof UsuarioVeterano){
-				throw new LogicaDeNegociosExecption("Impossivel promover um usuario que ja eh veterano.");
-			}
-			
-			/*
-			 * Esse passo me soa muito estranho pois a Loja precisa conhecer
-			 * tudo que ha em usuario, ou seja, nao tem muita vantagem o usuario
-			 * estar encapsulado.
-			 */
-			
-			// gambiarra{
-			
-			String nome = usuarioEncontrado.getNome();
-			String login = usuarioEncontrado.getLogin();
-			HashSet<Jogo> jogos = usuarioEncontrado.getJogos();
-			double saldo = usuarioEncontrado.getSaldo();
-			
-			
-			Usuario novoVeterano = new UsuarioVeterano(nome, login);
-			
-			novoVeterano.setJogos(jogos);
-			novoVeterano.setSaldo(saldo);
-			novoVeterano.setX2p(x2p);
-			
-			// }
-			
-			//remove o usuario que era noob da lista
-			this.getUsuarios().remove(usuarioEncontrado);
-			
-			this.getUsuarios().add(novoVeterano);
-			
-		
-		}catch(LogicaDeNegociosExecption lne){
-			
-			System.out.println(lne.getMessage());
-			
-		}catch(StringInvalidaException sie){
-			
-			System.out.println(sie.getMessage());
-			
-		}	
 	}
 	
 	
@@ -238,21 +177,18 @@ public class LojaController {
 	
 
 	
+	// metodos de validacao
 	
-	
-	private void validaUsuario(Usuario usuario)throws DadosInvalidosException{
-		if(usuario == null){
-			throw new DadosInvalidosException("Usuarios nulos nao sao permitidos.");
+	private void validaUsuario(String nomeUsuario, String loginUsuario)throws DadosInvalidosException{
+		if(nomeUsuario == null || nomeUsuario.trim().isEmpty()){
+			throw new DadosInvalidosException("Usuarios com nome vazio ou nulo nao sao permitidos.");
+		}
+		
+		if(loginUsuario == null || loginUsuario.trim().isEmpty()){
+			throw new DadosInvalidosException("Usuarios com login vazio ou nulo nao sao permitidos.");
 		}
 	}
 
-	
-	private void validaJogo(Jogo jogo)throws DadosInvalidosException{
-		if(jogo == null){
-			throw new DadosInvalidosException("Jogos nulos nao sao permitidos.");
-		}
-	}
-	
 	
 	private void validaLogin(String loginUsuario) throws StringInvalidaException {
 		
