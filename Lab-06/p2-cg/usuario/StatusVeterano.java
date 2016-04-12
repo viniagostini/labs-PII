@@ -1,11 +1,9 @@
 package usuario;
 
 import exceptions.DadosInvalidosException;
-import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
-import exceptions.StringInvalidaException;
+
 import jogo.Jogabilidade;
-import jogo.Jogo;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
@@ -22,8 +20,6 @@ public class StatusVeterano implements StatusDeUsuario {
 	public static final double DESCONTO =  0.2; //20% de desconto
 	public static final int MULTIPLICADOR_DE_X2P =  15;
 	
-	
-
 	public static final int PUNICAO_OFFLINE = 20;
 	public static final int PUNICAO_COMPETITIVO = 20;
 	

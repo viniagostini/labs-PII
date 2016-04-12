@@ -20,7 +20,7 @@ public class UsuarioFactory {
 	 * @param String - Nome do usuario.
 	 * @param String - Login do usuario.
 	 * 
-	 * @return Jogo - A referencia para o usuario criado.
+	 * @return Usuario - A referencia para o usuario criado.
 	 * 
 	 * @throws DadosInvalidosException - Caso algum dado invalido seja inserido.
 	 * @throws LogicaDeNegociosExecption - Caso o tipo de usuario seja invalido.
@@ -29,7 +29,5 @@ public class UsuarioFactory {
 		
 		return new Usuario(nomeUsuario, loginUsuario);
 	}
-	
-	
 	
 }

@@ -1,9 +1,9 @@
 package usuario;
 
-import jogo.Jogabilidade;
 import exceptions.DadosInvalidosException;
-import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
+
+import jogo.Jogabilidade;
 
 /* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
@@ -23,7 +23,6 @@ public class StatusNoob implements StatusDeUsuario{
 	public static final int PUNICAO_COMPETITIVO = 20;
 	public static final int PUNICAO_COOPERATIVO = 50;
 	
-
 	public static final int RECONPENSA_OFFLINE = 30;
 	public static final int RECONPENSA_MULTIPLAYER = 10;
 	
