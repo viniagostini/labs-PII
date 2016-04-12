@@ -2,6 +2,7 @@ package usuario;
 
 import java.util.HashSet;
 
+import exceptions.DadosInvalidosException;
 import exceptions.LogicaDeNegociosExecption;
 import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
@@ -16,13 +17,14 @@ import jogo.Jogo;
  * 
  * @author Vinicius A. Agostini
  */
-public abstract class Usuario {
+public class Usuario {
 
 	private String nome;
 	private String login;
 	private HashSet<Jogo> jogos;
 	private double saldo;
 	private int x2p;
+	private TipoDeUsuarioIF statusDoUsuario; 
 	
 	/**
 	 * Construtor
@@ -37,6 +39,7 @@ public abstract class Usuario {
 		this.nome = nome;
 		this.login = login;
 		this.jogos = new HashSet<Jogo>();
+		this.statusDoUsuario 
 	}
 	
 	/**
@@ -50,7 +53,31 @@ public abstract class Usuario {
 	 * @throws Exception - cabe as filhas dessa classe
 	 * definirem e tratarem suas proprias exception
 	 */
-	public abstract void realizaCompra(Jogo novoJogo)throws P2CGException;
+	public void realizaCompra(Jogo novoJogo)throws P2CGException{
+		
+		this.validaJogo(novoJogo);
+		
+		boolean contemJogo = this.getJogos().contains(novoJogo);
+		
+		if(contemJogo){
+			throw new LogicaDeNegociosExecption("Nao eh possivel comprar duas vezes o mesmo jogo");
+		}
+		
+		double precoJogo = novoJogo.getPreco();
+		double precoPago = this.statusDoUsuario.calculaPrecoCompra(precoJogo);
+		
+		
+		if( ! this.abateSaldo(precoPago) ){
+			throw new LogicaDeNegociosExecption("Saldo insuficente para comprar esse jogo");
+		}
+		
+		this.getJogos().add(novoJogo);
+		
+		int x2pRecebido = this.statusDoUsuario.calculaX2PCompra(precoJogo);
+		
+		this.incrementaX2p(x2pRecebido);
+		
+	}
 	
 	
 	/**
@@ -230,6 +257,14 @@ public abstract class Usuario {
 			throw new ValorNumericoInvalidoException("Nao eh permitido o registro de score negativo");
 		}
 
+	}
+	
+	private void validaJogo(Jogo jogo) throws DadosInvalidosException{
+		
+		if(jogo == null){
+			throw new DadosInvalidosException("Nao sao permitido jogos nulos.");
+		}
+		
 	}
 	
 	//metodos triviais

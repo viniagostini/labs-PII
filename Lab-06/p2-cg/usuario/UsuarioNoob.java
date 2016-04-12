@@ -32,35 +32,7 @@ public class UsuarioNoob extends Usuario{
 		super(nome, login);
 	}
 
-	/**
-	 * Realiza uma compra aplicando o desconto especifico
-	 * para usuarios noob
-	 */
-	@Override
-	public void realizaCompra(Jogo novoJogo) throws DadosInvalidosException, LogicaDeNegociosExecption {
-		
-		this.validaJogo(novoJogo);
-		
-		boolean contemJogo = this.getJogos().contains(novoJogo);
-		
-		if(contemJogo){
-			throw new LogicaDeNegociosExecption("Nao eh possivel comprar duas vezes o mesmo jogo");
-		}
-		
-		double precoJogo = novoJogo.getPreco();
-		double precoPago = this.aplicaDesconto(precoJogo);
-		
-		
-		if( ! this.abateSaldo(precoPago) ){
-			throw new LogicaDeNegociosExecption("Saldo insuficente para comprar esse jogo");
-		}
-		
-		this.getJogos().add(novoJogo);
-		
-		int x2pRecebido = this.calculaX2pRecebidoEmCompra(precoJogo);
-		
-		this.incrementaX2p(x2pRecebido);
-	}
+	
 	
 	
 	private double aplicaDesconto(double valor){
@@ -73,25 +45,5 @@ public class UsuarioNoob extends Usuario{
 		return (int) valorJogo * MULTIPLICADOR_DE_X2P;
 	}
 	
-	
-	public String toString(){
-		String quebraDeLinha = System.lineSeparator();
-		
-		String retorno = "-----------Jogador Noob-------------" + quebraDeLinha;
-		
-		retorno += super.toString();
-		
-		return retorno;
-	}
 
-	
-	private void validaJogo(Jogo jogo) throws DadosInvalidosException{
-		
-		if(jogo == null){
-			throw new DadosInvalidosException("Nao sao permitido jogos nulos.");
-		}
-		
-	}
-
-	
 }
