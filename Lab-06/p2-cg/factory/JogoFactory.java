@@ -8,6 +8,8 @@ import jogo.JogoPlataforma;
 import jogo.JogoRPG;
 import jogo.TipoDeJogo;
 
+
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Classe cuja unica resposabilidade esta na criacao de Jogos
  * 

@@ -4,8 +4,8 @@ import exceptions.DadosInvalidosException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
-/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Classe que herda comportamentos e estados de {@link jogo.Jogo}
  * e implemeta comportamentos especificos de jogos de RPG.

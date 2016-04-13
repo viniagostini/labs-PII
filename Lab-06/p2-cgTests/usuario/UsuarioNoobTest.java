@@ -23,7 +23,7 @@ public class UsuarioNoobTest {
 		
 		//verifica o estado inicial do objeto
 		try{
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			
 			String nome = vinicius.getNome();
 			String login = vinicius.getLogin();
@@ -44,7 +44,7 @@ public class UsuarioNoobTest {
 		//verifica a insercao de nome vazio
 		try{
 			@SuppressWarnings("unused")
-			UsuarioNoob vinicius = new UsuarioNoob("", "vinicius.agostini");
+			Usuario vinicius = new Usuario("", "vinicius.agostini");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -62,7 +62,7 @@ public class UsuarioNoobTest {
 		//verfica a insercao de login vazio
 		try{
 			@SuppressWarnings("unused")
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "");
+			Usuario vinicius = new Usuario("Vinicius", "");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -84,7 +84,7 @@ public class UsuarioNoobTest {
 		
 		try{
 			
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(90);
@@ -112,7 +112,7 @@ public class UsuarioNoobTest {
 		//teste adicionando um jogo nulo
 		try{
 			
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			
 			vinicius.incrementaSaldo(100);
 			
@@ -136,7 +136,7 @@ public class UsuarioNoobTest {
 		//teste comprando duas vezes o mesmo jogo
 		try{
 			
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			JogoPlataforma outroMario = new JogoPlataforma("Mario", 100);
 			
@@ -164,7 +164,7 @@ public class UsuarioNoobTest {
 		//teste tentando comprar jogo com saldo insuficiente
 		try{
 			
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(89.90);
@@ -196,7 +196,7 @@ public class UsuarioNoobTest {
 		
 		try{
 			
-			UsuarioNoob vinicius = new UsuarioNoob("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(90);
@@ -204,7 +204,7 @@ public class UsuarioNoobTest {
 			//lembrando que o jogo recebe 10% de desconto
 			vinicius.realizaCompra(mario);
 			
-			vinicius.registraJogada("Mario", 1000, true);
+			vinicius.recompensaJogada("Mario", 1000, true);
 			
 			int x2pObtido = vinicius.getX2p() - 1000; //1000 eh o x2p ganho na compra do jogo
 			

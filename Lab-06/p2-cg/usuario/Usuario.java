@@ -11,8 +11,8 @@ import factory.StatusDeUsuarioFactory;
 import jogo.Jogabilidade;
 import jogo.Jogo;
 
-/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Classe abstrata que encapsula todos os comportamentos e estados que um
  * Usuario deve possuir nesse sistema.

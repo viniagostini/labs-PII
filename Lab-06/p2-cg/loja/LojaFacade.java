@@ -8,6 +8,7 @@ import exceptions.ValorNumericoInvalidoException;
 import jogo.TipoDeJogo;
 import usuario.TipoDeUsuario;
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 public class LojaFacade {
 
 	
@@ -40,7 +41,6 @@ public class LojaFacade {
 		
 			return false;
 	}
-
 	
 	public void adicionaDinheiro(String loginUsuario, double qtdDinheiro) {
 		
@@ -64,7 +64,6 @@ public class LojaFacade {
 		
 	}
 
-	
 	public void vendeJogo(String nomeJogo, double precoJogo, TipoDeJogo tipoJogo, String loginUsuario) {
 		
 		try{
@@ -88,7 +87,6 @@ public class LojaFacade {
 			System.out.println(e.getMessage());
 		}
 	}
-
 	
 	public void imprimeInfoUsuarios() {
 		

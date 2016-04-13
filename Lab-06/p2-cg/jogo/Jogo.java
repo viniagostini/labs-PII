@@ -7,8 +7,8 @@ import exceptions.P2CGException;
 import exceptions.StringInvalidaException;
 import exceptions.ValorNumericoInvalidoException;
 
-/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Classe abstrata que encapsula todos os comportamentos e estados que um
  * jogo deve possuir nesse sistema.

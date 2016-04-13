@@ -16,8 +16,8 @@ import jogo.TipoDeJogo;
 
 import usuario.Usuario;
 
-/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Classe Controller responsavel por gerenciar uma lista de usuarios
  * e as operacoes de venda de jogos, adicao de novos usuarios,
@@ -148,7 +148,7 @@ public class LojaController {
 	 * 
 	 * @throws LogicaDeNegociosExecption - caso o usuario nao seja encontrado
 	 */
-	private Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption , StringInvalidaException{
+	public Usuario buscaUsuario(String loginUsuario)throws LogicaDeNegociosExecption , StringInvalidaException{
 		
 		this.validaLogin(loginUsuario);
 		

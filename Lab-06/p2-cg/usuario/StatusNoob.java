@@ -5,9 +5,8 @@ import exceptions.P2CGException;
 
 import jogo.Jogabilidade;
 
-/* 115110107 - Vinicius Alencar Agostini: LAB 6 - Turma 3 */
 
-
+/* 115110107 - Vinicius Alencar Agostini: LAB 7 - Turma 3 */
 /**
  * Implementa os comportamentos de um tipo de usuario,
  * nesse caso um usuario noob.

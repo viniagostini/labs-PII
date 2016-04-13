@@ -23,7 +23,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		//verifica o estado inicial do objeto
 		try{
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			
 			String nome = vinicius.getNome();
 			String login = vinicius.getLogin();
@@ -44,7 +44,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//verifica a insercao de nome vazio
 		try{
 			@SuppressWarnings("unused")
-			StatusVeterano vinicius = new StatusVeterano("", "vinicius.agostini");
+			Usuario vinicius = new Usuario("", "vinicius.agostini");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -62,7 +62,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//verfica a insercao de login vazio
 		try{
 			@SuppressWarnings("unused")
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "");
+			Usuario vinicius = new Usuario("Vinicius", "");
 			
 			fail("Deveria ter lancar uma StringInvalidaException.");
 			
@@ -84,8 +84,14 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		try{
 			
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
+			
+			//tornando o usuario veterano
+			vinicius.setX2p(1001);
+			vinicius.verificaStatusUsuario();
+			
+			System.out.println();
 			
 			vinicius.incrementaSaldo(80);
 			
@@ -102,7 +108,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 			
 			//verica os x2p gerados pela compra
 			int x2p = vinicius.getX2p();
-			assertEquals(1500, x2p);
+			assertEquals(1500+1001, x2p);
 			
 			
 		}catch(Exception e){
@@ -112,7 +118,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste adicionando um jogo nulo
 		try{
 			
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			
 			vinicius.incrementaSaldo(100);
 			
@@ -135,7 +141,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste comprando duas vezes o mesmo jogo
 		try{
 			
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			JogoPlataforma outroMario = new JogoPlataforma("Mario", 100);
 			
@@ -163,7 +169,7 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		//teste tentando comprar jogo com saldo insuficiente
 		try{
 			
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(79.90);
@@ -195,17 +201,21 @@ public static final String NAO_DEVERIA_LANCAR_EXCEPTION = "Nao deveria ter lanca
 		
 		try{
 			
-			StatusVeterano vinicius = new StatusVeterano("Vinicius", "vinicius.agostini");
+			Usuario vinicius = new Usuario("Vinicius", "vinicius.agostini");
 			JogoPlataforma mario = new JogoPlataforma("Mario", 100);
 			
 			vinicius.incrementaSaldo(80);
 			
+			//tornando o usuario veterano
+			vinicius.setX2p(1001);
+			vinicius.verificaStatusUsuario();
+			
 			//lembrando que o jogo recebe 20% de desconto
 			vinicius.realizaCompra(mario);
 			
-			vinicius.registraJogada("Mario", 1000, true);
+			vinicius.recompensaJogada("Mario", 1000, true);
 			
-			int x2pObtido = vinicius.getX2p() - 1500; //1000 eh o x2p ganho na compra do jogo
+			int x2pObtido = vinicius.getX2p() - 1500 - 1001; //1000 eh o x2p ganho na compra do jogo
 			
 			int x2pEsperado = 20;
 			
